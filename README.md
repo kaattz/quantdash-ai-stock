@@ -54,6 +54,7 @@
 4. 在 `.env.local` 中按需配置环境变量：
    `TUSHARE_API_KEY`
    `TUSHARE_API_BASE_URL`
+   `PYWENCAI_COOKIE`
 5. 启动开发环境：
    `npm run dev`
 6. 生产构建：
@@ -65,6 +66,7 @@
 
 - `TUSHARE_API_KEY`
 - `TUSHARE_API_BASE_URL`
+- `PYWENCAI_COOKIE`
 - `FEISHU_APP_ID`
 - `FEISHU_APP_SECRET`
 - `FEISHU_BOT_AI_BASE_URL`
@@ -72,6 +74,8 @@
 - `FEISHU_BOT_AI_MODEL`
 
 如果只使用前端展示和本地文件读取，这些变量可以先不配置。
+
+如果要使用 `pywencai` 一句话选股，需要在 `.env.local` 中配置 `PYWENCAI_COOKIE`。该值应从你本机浏览器的同花顺问财请求头中复制，只在本地保存，不要提交到 Git。
 
 公开仓库时不要提交 `.env.local`，只提交 `.env.example`。
 

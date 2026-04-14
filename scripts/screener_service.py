@@ -228,6 +228,7 @@ except AttributeError:  # pydantic v1 fallback
 
 AUTH_TOKEN_TTL = timedelta(days=7)
 ENV_LOCAL_PATH = ROOT_DIR / ".env.local"
+PYWENCAI_COOKIE_ENV_KEYS = ("PYWENCAI_COOKIE", "WENCAI_COOKIE")
 FEISHU_ENV_KEY_MAP = {
     "appId": "FEISHU_APP_ID",
     "appSecret": "FEISHU_APP_SECRET",
@@ -319,6 +320,19 @@ def _save_feishu_bot_config(payload: FeishuBotConfigPayload) -> FeishuBotConfigP
     }
     _write_env_local_updates(updates)
     return _load_feishu_bot_config()
+
+
+def _load_env_value(*keys: str) -> str:
+    env_map = _parse_env_local_map()
+    for key in keys:
+        value = env_map.get(key, os.environ.get(key, "")).strip()
+        if value:
+            return value
+    return ""
+
+
+def _load_pywencai_cookie() -> str:
+    return _load_env_value(*PYWENCAI_COOKIE_ENV_KEYS)
 
 
 def _build_feishu_test_result(kind: Literal["success", "warning", "error"], status_label: str, detail: str) -> FeishuBotConfigTestResult:
@@ -1412,8 +1426,15 @@ async def run_wencai_query(question: str) -> List[StockPayload]:
     if pywencai is None:
         raise HTTPException(status_code=503, detail="pywencai is not installed in this environment")
 
+    cookie = _load_pywencai_cookie()
+    if not cookie:
+        raise HTTPException(
+            status_code=503,
+            detail="未配置 PYWENCAI_COOKIE，请先在 .env.local 中填写后再使用 pywencai 选股。",
+        )
+
     def _query():
-        return pywencai.get(question=question, loop=True)
+        return pywencai.get(query=question, loop=True, cookie=cookie)
 
     try:
         result = await asyncio.to_thread(_query)
