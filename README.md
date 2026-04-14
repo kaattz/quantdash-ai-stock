@@ -57,6 +57,18 @@
 - 本地 `stdio` MCP Server，供外部 AI 直接读取结构化数据
 - 飞书问答机器人，可复用项目内结构化数据和模型线路
 
+## 支持大模型 / 平台
+
+| 模型 / 平台 | 状态 | 备注 |
+| --- | --- | --- |
+| [OpenAI](https://openai.com/) | ✅ | 可接入任何 OpenAI 兼容接口格式模型 |
+| [Ollama](https://ollama.com/) | ✅ | 本地大模型运行平台 |
+| [LM Studio](https://lmstudio.ai/) | ✅ | 本地大模型运行平台 |
+| [AnythingLLM](https://anythingllm.com/) | ✅ | 本地知识库与文档问答平台 |
+| [DeepSeek](https://deepseek.com/) | ✅ | 支持 `deepseek-reasoner`、`deepseek-chat` 等线路 |
+| [SiliconFlow 硅基流动](https://siliconflow.cn/) | ✅ | OpenAI 兼容模型聚合平台 |
+| [火山方舟](https://www.volcengine.com/product/ark) | ✅ | 豆包等模型接入平台 |
+
 ## 快速开始
 
 只启动前端时，最少执行下面两步：
