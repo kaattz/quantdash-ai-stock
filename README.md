@@ -18,6 +18,25 @@
 
 完整项目手册见：[项目使用手册.md](./项目使用手册.md)
 
+## 项目截图
+
+![项目截图 01](./images/3bf3d1dc-0c25-4d52-b944-c6e9b4389eaf.png)
+![项目截图 02](./images/4f6ef0a9-e07d-4232-9e5b-8f2bac492cf1.png)
+![项目截图 03](./images/f7af157d-7c69-4346-94b0-530801de7bb5.png)
+![项目截图 04](./images/18c31766-eccb-43fd-a08d-ab959cf38d9d.png)
+![项目截图 05](./images/acfaa650-4c0a-4429-9822-320d2f6b8d0c.png)
+![项目截图 06](./images/b45cc8e9-6ad4-4606-a870-dfbab23fc5c8.png)
+![项目截图 07](./images/9c7bb372-4ad8-4490-98f5-1163994a9295.png)
+![项目截图 08](./images/ff64cc84-451d-4c6f-b907-a1b0f118e9fc.png)
+![项目截图 09](./images/e4639a0d-f53c-48a4-9b5e-e95c732ca836.png)
+![项目截图 10](./images/0e137fb3-0137-4751-adb0-9aa59c3633c2.png)
+![项目截图 11](./images/157e7eba-c214-4a45-8c1e-8fd930b8d346.png)
+![项目截图 12](./images/dac0f260-fc0c-4558-823d-bb9047078360.png)
+![项目截图 13](./images/aeffc946-adfb-4a19-bd2f-e6064de14adc.png)
+![项目截图 14](./images/9d39966f-72cb-40d3-bcec-712155bf4cd7.png)
+![项目截图 15](./images/91830b63-2430-44cc-a618-156dc1a4a2dc.png)
+![项目截图 16](./images/3ae651f31d0edc5d8c65aa421d095c81.png)
+
 ## 许可状态
 
 - 代码许可证：[`PolyForm Noncommercial 1.0.0`](./LICENSE)
