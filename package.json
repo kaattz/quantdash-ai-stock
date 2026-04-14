@@ -1,6 +1,7 @@
 {
   "name": "quantdash---a-share-analytics",
   "description": "A-share analytics dashboard for market review, sentiment tracking, report workflows, and AI-assisted planning.",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "private": true,
   "version": "0.1.0",
   "type": "module",

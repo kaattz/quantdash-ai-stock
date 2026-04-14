@@ -1,9 +1,10 @@
-# GitHub 开源前检查清单
+# GitHub 公开前检查清单
 
 ## 必做
 
 - 选定并补充 `LICENSE`
 - 确认 `LICENSE` 与 README 中的数据公开说明一致
+- 如果限制商业使用，确认 README 与仓库描述没有继续宣称 `MIT` 或标准开源许可
 - 确认 `.env.local`、本地数据库、会话信息未进入首个提交
 - 审核 `data/` 下是否包含不适合公开分发的数据
 - 审核 `data/research_reports/auto/` 这类第三方研报原文是否允许公开再分发
