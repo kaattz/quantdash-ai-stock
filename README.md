@@ -69,6 +69,11 @@
 | [SiliconFlow 硅基流动](https://siliconflow.cn/) | ✅ | OpenAI 兼容模型聚合平台 |
 | [火山方舟](https://www.volcengine.com/product/ark) | ✅ | 豆包等模型接入平台 |
 
+如果你准备找一个省事的模型聚合入口，可以试试 [SiliconFlow 硅基流动](https://cloud.siliconflow.cn/i/uVFj3AbT)。
+
+- 邀请链接：[https://cloud.siliconflow.cn/i/uVFj3AbT](https://cloud.siliconflow.cn/i/uVFj3AbT)
+- 邀请码：`uVFj3AbT`
+
 ## 快速开始
 
 只启动前端时，最少执行下面两步：
