@@ -1,4 +1,4 @@
-简体中文 | [English](./README.en.md)
+简体中文 | [English](./README.en.md) | [日本語](./README.ja.md)
 
 > 当你不再幻想索取什么，
 > 而只是机械地执行规则时，

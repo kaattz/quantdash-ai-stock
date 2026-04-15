@@ -1,4 +1,4 @@
-[简体中文](./README.md) | English
+[简体中文](./README.md) | English | [日本語](./README.ja.md)
 
 # QuantDash A-Share Trading Dashboard
 
@@ -20,6 +20,11 @@ Full Chinese manual: [项目使用手册.md](./项目使用手册.md)
 
 - Chinese: [README.md](./README.md)
 - English: [README.en.md](./README.en.md)
+- Japanese: [README.ja.md](./README.ja.md)
+
+## Note
+
+The Japanese README is provided as a lightweight reference for navigation. The Chinese README remains the primary and most complete version.
 
 ## Planned Updates
 
