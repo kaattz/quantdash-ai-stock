@@ -9,6 +9,7 @@
 > 进行 AI 一键复盘。
 >
 > 项目长期更新。
+> 拿走拜托点个 Star。
 
 # QuantDash A股看盘与复盘面板
 
@@ -502,7 +503,5 @@ AI 通过 MCP 读取结构化数据，再做情绪周期、龙头状态、题材
 
 - 本仓库代码以 [`PolyForm Noncommercial 1.0.0`](./LICENSE) 许可证提供。
 - 未经项目维护者额外授权，不得将本仓库代码用于商业用途。
-- `.env.local`、本地数据库、会话信息、第三方报告原文、网页快照和个人研究资料不属于公开仓库内容。
-- 公开仓库默认只保留源码、脚本、目录骨架、说明文档和少量非敏感示例文件。
-- 仓库已提供 [.env.example](./.env.example)、[CONTRIBUTING.md](./CONTRIBUTING.md)、[SECURITY.md](./SECURITY.md) 作为公开协作基础文件。
-- 发布公开版本前，请继续按 [OPEN_SOURCE_CHECKLIST.md](./OPEN_SOURCE_CHECKLIST.md) 做最后检查，尤其确认第三方数据是否允许再分发。
+- 仓库不包含 `.env.local`、本地数据库、第三方报告原文、网页快照及个人研究资料。
+- 使用、部署或再分发前，请自行确认代码许可与数据来源许可的适用范围。
