@@ -1,6 +1,6 @@
 import { SectorBoardType, SectorCycleData, SectorPersistenceData, SectorPersistenceEntry } from '../types';
 import { fetchJsonWithFallback } from './eastmoneyService';
-import { loadLocalJsonFile } from './localDataService';
+import { loadLocalJsonFile, isLocalDataStale, isLocalDatesStale } from './localDataService';
 
 type SectorBoardSnapshot = {
   code: string;
@@ -90,7 +90,7 @@ export const getSectorRotationData = async (
   const ranks = [1, 2, 3, 4, 5, 6, 7, 8];
 
   const localRotation = await loadLocalJsonFile<SectorCycleData>(`sector_rotation_${boardType}.json`);
-  if (localRotation?.dates?.length) {
+  if (localRotation?.dates?.length && !isLocalDatesStale(localRotation.dates)) {
     return localRotation;
   }
 
@@ -150,7 +150,9 @@ export const getSectorPersistenceData = async (
 ): Promise<SectorPersistenceData | null> => {
   const localPersistence = await loadLocalJsonFile<SectorPersistenceData>(`sector_persistence_${boardType}.json`);
   if (localPersistence?.entries?.length) {
-    return localPersistence;
+    if (!isLocalDataStale(localPersistence.entries)) {
+      return localPersistence;
+    }
   }
 
   try {

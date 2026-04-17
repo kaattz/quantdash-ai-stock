@@ -1,6 +1,6 @@
 import { BullBearSignalSnapshot, EmotionIndicatorEntry, IndexFuturesLongShortSeries } from '../types';
 import { fetchJsonWithFallback, DataSource } from './eastmoneyService';
-import { loadLocalJsonFile } from './localDataService';
+import { loadLocalJsonFile, isLocalDataStale } from './localDataService';
 import { getMarketVolumeTrendHistory } from './sentimentCycleService';
 
 let EMOTION_INDICATOR_SOURCE: DataSource = 'unknown';
@@ -144,8 +144,12 @@ const fetchIndexFuturesLongShortRatioSeries = async (): Promise<Map<string, numb
 export const getIndexFuturesLongShortHistory = async (): Promise<IndexFuturesLongShortSeries[]> => {
   const localData = await loadLocalJsonFile<IndexFuturesLongShortSeries[]>('index_futures_long_short.json');
   if (localData && localData.length > 0) {
-    EMOTION_INDICATOR_SOURCE = 'local';
-    return localData;
+    // 检查任意一个品种的 history 最新日期是否过期
+    const latestHistory = localData[0]?.history;
+    if (latestHistory && latestHistory.length > 0 && !isLocalDataStale(latestHistory)) {
+      EMOTION_INDICATOR_SOURCE = 'local';
+      return localData;
+    }
   }
 
   try {
@@ -219,7 +223,7 @@ const fetchLimitPoolMeta = async (date: string, poolType: 'zt' | 'dt'): Promise<
 
 export const getBullBearSignalSnapshot = async (): Promise<BullBearSignalSnapshot | null> => {
   const localHistory = await loadLocalJsonFile<BullBearSignalSnapshot[]>('bull_bear_signal.json');
-  if (Array.isArray(localHistory) && localHistory.length > 0) {
+  if (Array.isArray(localHistory) && localHistory.length > 0 && !isLocalDataStale(localHistory)) {
     EMOTION_INDICATOR_SOURCE = 'local';
     return localHistory[localHistory.length - 1] ?? null;
   }
@@ -340,7 +344,7 @@ export const getBullBearSignalSnapshot = async (): Promise<BullBearSignalSnapsho
 
 export const getBullBearSignalHistory = async (): Promise<BullBearSignalSnapshot[]> => {
   const localHistory = await loadLocalJsonFile<BullBearSignalSnapshot[]>('bull_bear_signal.json');
-  if (Array.isArray(localHistory) && localHistory.length > 0) {
+  if (Array.isArray(localHistory) && localHistory.length > 0 && !isLocalDataStale(localHistory)) {
     EMOTION_INDICATOR_SOURCE = 'local';
     return localHistory;
   }
@@ -351,7 +355,7 @@ export const getBullBearSignalHistory = async (): Promise<BullBearSignalSnapshot
 
 export const getEmotionIndicatorHistory = async (): Promise<EmotionIndicatorEntry[]> => {
   const localIndicators = await loadLocalJsonFile<EmotionIndicatorEntry[]>('emotion_indicators.json');
-  if (localIndicators && localIndicators.length > 0) {
+  if (localIndicators && localIndicators.length > 0 && !isLocalDataStale(localIndicators)) {
     EMOTION_INDICATOR_SOURCE = 'local';
     return localIndicators;
   }

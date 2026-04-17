@@ -349,6 +349,18 @@ const SentimentSection: React.FC = () => {
      }
   }, [activeMetric]);
 
+  // 高度趋势图表加载后自动滚动到最右端（最新日期）
+  useEffect(() => {
+    if (activeMetric === 'height' && !boardHeightLoading && boardHeightData.length > 0 && boardHeightScrollRef.current) {
+      requestAnimationFrame(() => {
+        const el = boardHeightScrollRef.current;
+        if (el) {
+          el.scrollLeft = el.scrollWidth;
+        }
+      });
+    }
+  }, [activeMetric, boardHeightLoading, boardHeightData.length]);
+
   const handleRefresh = async () => {
       if (activeMetric === 'pressure') {
           await resetSentimentData();
@@ -511,7 +523,7 @@ const SentimentSection: React.FC = () => {
   const selectedLeaderEntry = leaderData.find((item) => item.date === selectedHistoricalDate) ?? leaderData[leaderData.length - 1] ?? null;
   const selectedBoardHeightEntry = sortedBoardHeightData.find((item) => (item.fullDate ?? item.date) === selectedHistoricalDate) ?? latestBoardHeight;
   const boardHeightChartWidth = useMemo(
-    () => Math.max(1500, sortedBoardHeightData.length * 220),
+    () => Math.max(1500, sortedBoardHeightData.length * 220 + 120),
     [sortedBoardHeightData.length]
   );
   const boardHeightDateIndexMap = useMemo(() => {
@@ -2094,7 +2106,7 @@ const SentimentSection: React.FC = () => {
                     >
                       <div className="h-full min-h-[760px] pl-2 pr-8 outline-none" style={{ width: boardHeightChartWidth + 20 }}>
                       <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={sortedBoardHeightData} margin={{ top: 72, right: 40, left: 0, bottom: 48 }}>
+                    <LineChart data={sortedBoardHeightData} margin={{ top: 72, right: 100, left: 0, bottom: 48 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(148,163,184,0.12)" />
                       <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} dy={10} />
                       <YAxis hide domain={[0, boardHeightAxisTicks.max]} ticks={boardHeightAxisTicks.ticks} allowDecimals={false} />

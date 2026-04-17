@@ -12,7 +12,7 @@ import {
 } from '../types';
 import { db, STORES } from './db';
 import { fetchJsonWithFallback, DataSource } from './eastmoneyService';
-import { loadLocalJsonFile } from './localDataService';
+import { loadLocalJsonFile, isLocalDataStale } from './localDataService';
 import { getStockKline, getSingleDayCloseChange, getSingleDayPerformance } from './quotesService';
 import { fetchBrokenPool, fetchLimitUpPool, LimitUpStock } from './limitUpPoolService';
 
@@ -376,7 +376,7 @@ const buildStructureEntriesFromSentiment = (items: SentimentEntry[]): LimitUpStr
 const getLimitUpPerformanceHistory = async (forceRefresh = false): Promise<LimitUpPerformanceEntry[]> => {
   if (!forceRefresh) {
     const localPerformance = await loadLocalJsonFile<LimitUpPerformanceEntry[]>('performance.json');
-    if (localPerformance && localPerformance.length > 0) {
+    if (localPerformance && localPerformance.length > 0 && !isLocalDataStale(localPerformance)) {
       PERFORMANCE_CACHE.data = localPerformance;
       PERFORMANCE_CACHE.timestamp = Date.now();
       PERFORMANCE_SOURCE = 'local';
@@ -462,7 +462,7 @@ export const resetSentimentData = async () => {
 export const getSentimentCoefficientHistory = async (forceRefresh = false): Promise<SentimentEntry[]> => {
   if (!forceRefresh) {
     const localSentiment = await loadLocalJsonFile<SentimentEntry[]>('sentiment.json');
-    if (localSentiment && localSentiment.length > 0) {
+    if (localSentiment && localSentiment.length > 0 && !isLocalDataStale(localSentiment)) {
       const cleaned = localSentiment
         .filter(item => (item.limitUpCount ?? 0) > 0)
         .sort((a, b) => a.date.localeCompare(b.date))
@@ -648,7 +648,7 @@ export const getBrokenRateHistory = async (forceRefresh = false): Promise<Broken
 export const getLimitUpStructureHistory = async (forceRefresh = false): Promise<LimitUpStructureEntry[]> => {
   if (!forceRefresh) {
     const localSnapshot = await loadLocalSnapshot<LimitUpStructureEntry[]>('limit_up_structure.json');
-    if (localSnapshot && localSnapshot.length > 0) {
+    if (localSnapshot && localSnapshot.length > 0 && !isLocalDataStale(localSnapshot)) {
       LIMIT_UP_STRUCTURE_CACHE.data = localSnapshot;
       LIMIT_UP_STRUCTURE_CACHE.timestamp = Date.now();
       STRUCTURE_SOURCE = 'local';
@@ -691,7 +691,7 @@ export const getLimitUpStructureHistory = async (forceRefresh = false): Promise<
 export const getRepairRateHistory = async (forceRefresh = false): Promise<RepairRateEntry[]> => {
   if (!forceRefresh) {
     const localSnapshot = await loadLocalSnapshot<RepairRateEntry[]>('repair_rate.json');
-    if (localSnapshot && localSnapshot.length > 0) {
+    if (localSnapshot && localSnapshot.length > 0 && !isLocalDataStale(localSnapshot)) {
       REPAIR_CACHE.data = localSnapshot;
       REPAIR_CACHE.timestamp = Date.now();
       REPAIR_SOURCE = 'local';
@@ -803,7 +803,7 @@ const fetchMarketIndexAmountSeries = async (secid: string): Promise<Map<string, 
 export const getLeaderStateHistory = async (forceRefresh = false): Promise<LeaderStateEntry[]> => {
   if (!forceRefresh) {
     const localSnapshot = await loadLocalSnapshot<LeaderStateEntry[]>('leader_state.json');
-    if (localSnapshot && localSnapshot.length > 0) {
+    if (localSnapshot && localSnapshot.length > 0 && !isLocalDataStale(localSnapshot)) {
       LEADER_CACHE.data = localSnapshot;
       LEADER_CACHE.timestamp = Date.now();
       LEADER_SOURCE = 'local';
@@ -882,7 +882,7 @@ export const getLeaderStateHistory = async (forceRefresh = false): Promise<Leade
 export const getBoardHeightHistory = async (forceRefresh = false): Promise<BoardHeightEntry[]> => {
   if (!forceRefresh) {
     const localSnapshot = await loadLocalSnapshot<BoardHeightEntry[]>('board_height_history.json');
-    if (localSnapshot && localSnapshot.length > 0) {
+    if (localSnapshot && localSnapshot.length > 0 && !isLocalDataStale(localSnapshot)) {
       const sorted = sortBoardHeightEntries(localSnapshot);
       BOARD_HEIGHT_CACHE.data = sorted;
       BOARD_HEIGHT_CACHE.timestamp = Date.now();
