@@ -1,13 +1,13 @@
 
-import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import GlassCard from './ui/GlassCard';
 import Badge from './ui/Badge';
 import { getStockList } from '../services/quotesService';
 import { Stock } from '../types';
 import { Search, TrendingUp, TrendingDown, Layers, Activity, Loader2 } from 'lucide-react';
 import { StockDetailRequest } from '../services/stockNavigationService';
-
-const StockHoverCard = lazy(() => import('./StockHoverCard'));
+import { useStockDialog } from '@/hooks/useStockDialog';
+import StockDialogWrapper from './StockDialogWrapper';
 
 interface StockInfoSectionProps {
   stockDetailRequest?: StockDetailRequest | null;
@@ -22,15 +22,8 @@ const StockInfoSection: React.FC<StockInfoSectionProps> = ({
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
   const [loading, setLoading] = useState(true);
+  const { dialogState, openDialog, closeDialog, dialogRef } = useStockDialog();
 
-  // Hover Card State
-  const [hoveredStock, setHoveredStock] = useState<Stock | null>(null);
-  const [cardPos, setCardPos] = useState({ x: 0, y: 0 }); // Fixed position when card opens
-  
-  // Refs for logic
-  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const mousePosRef = useRef({ x: 0, y: 0 }); // Track mouse without re-render
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,87 +52,6 @@ const StockInfoSection: React.FC<StockInfoSectionProps> = ({
     onStockDetailRequestHandled?.(stockDetailRequest);
   }, [stockDetailRequest, stocks, onStockDetailRequestHandled]);
 
-  const handleRowMouseEnter = (e: React.MouseEvent, stock: Stock) => {
-    // Clear any pending close timer if we moved from card back to row, or row to row
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-
-    // Debounce showing the card
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    
-    hoverTimeoutRef.current = setTimeout(() => {
-      // Freeze the position at the moment the card opens based on latest mouse pos
-      setCardPos(mousePosRef.current);
-      setHoveredStock(stock);
-    }, 400); // 400ms delay before opening
-  };
-
-  const handleRowMouseMove = (e: React.MouseEvent) => {
-    // Always track latest mouse position in ref
-    mousePosRef.current = { x: e.clientX, y: e.clientY };
-  };
-
-  const handleRowMouseLeave = () => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    
-    // Delay closing to allow user to move into the card
-    closeTimeoutRef.current = setTimeout(() => {
-      setHoveredStock(null);
-    }, 300);
-  };
-
-  const handleCardMouseEnter = () => {
-    // If user enters the card, cancel the close timer
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-  };
-
-  const handleCardMouseLeave = () => {
-    // If user leaves card, close it immediately (or add small delay if needed)
-    setHoveredStock(null);
-  };
-
-  // Calculate position styles
-  const getCardStyle = () => {
-    const cardWidth = 750;
-    const cardHeight = 600;
-    const gap = 15; // Decreased gap to make it easier to enter
-    
-    // Use the frozen cardPos, not the dynamic mousePosRef
-    let left = cardPos.x + gap;
-    let top = cardPos.y - cardHeight / 4; 
-    
-    // Boundary check right
-    if (left + cardWidth > window.innerWidth) {
-      left = cardPos.x - cardWidth - gap;
-    }
-    // Boundary check bottom
-    if (top + cardHeight > window.innerHeight) {
-       top = window.innerHeight - cardHeight - gap;
-    }
-    // Boundary check top
-    if (top < gap) {
-      top = gap;
-    }
-
-    return {
-      position: 'fixed' as 'fixed',
-      left: `${left}px`,
-      top: `${top}px`,
-      zIndex: 100,
-      pointerEvents: 'auto' as 'auto', // Allow interaction
-    };
-  };
-
-  const hoverCardFallback = (
-    <div className="w-[320px] h-[180px] rounded-lg border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 shadow-2xl flex items-center justify-center text-slate-500 dark:text-gray-400">
-      <Loader2 className="animate-spin" />
-    </div>
-  );
 
   if (loading) {
     return (
@@ -248,10 +160,10 @@ const StockInfoSection: React.FC<StockInfoSectionProps> = ({
                   key={stock.symbol} 
                   className={`transition-colors cursor-pointer group 
                     ${selectedStock.symbol === stock.symbol ? 'bg-cyan-50/50 dark:bg-white/[0.08]' : 'hover:bg-slate-50/50 dark:hover:bg-white/[0.03]'}`}
-                  onClick={() => setSelectedStock(stock)}
-                  onMouseEnter={(e) => handleRowMouseEnter(e, stock)}
-                  onMouseMove={handleRowMouseMove}
-                  onMouseLeave={handleRowMouseLeave}
+                  onClick={(e) => {
+                    setSelectedStock(stock);
+                    openDialog(stock, e);
+                  }}
                 >
                   <td className="p-4 font-mono text-slate-500 dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors relative">
                     {stock.symbol}
@@ -280,17 +192,13 @@ const StockInfoSection: React.FC<StockInfoSectionProps> = ({
         </div>
       </GlassCard>
 
-      {/* Hover Card Portal/Overlay */}
-      {hoveredStock && (
-        <div 
-          style={getCardStyle()}
-          onMouseEnter={handleCardMouseEnter}
-          onMouseLeave={handleCardMouseLeave}
-        >
-          <Suspense fallback={hoverCardFallback}>
-            <StockHoverCard stock={hoveredStock} />
-          </Suspense>
-        </div>
+      {dialogState.stock && (
+        <StockDialogWrapper
+          stock={dialogState.stock}
+          position={dialogState.position}
+          onClose={closeDialog}
+          dialogRef={dialogRef}
+        />
       )}
     </div>
   );

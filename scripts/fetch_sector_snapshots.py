@@ -5,7 +5,7 @@ import sys
 import time
 from typing import Any, Dict, List, Optional
 
-from data_fetch_utils import chunked, fetch_with_fallbacks, now_millis, save_json
+from data_fetch_utils import chunked, fetch_with_fallbacks, now_millis, save_json, tushare_rows, tushare_sector_list, tushare_sector_kline, _fmt_date, _today_str, _date_n_days_ago
 
 
 SECTOR_BOARD_CONFIG = {
@@ -46,46 +46,26 @@ def resolve_requested_board_types() -> List[str]:
 
 
 def fetch_sector_board_list(board_type: str) -> List[dict[str, Any]]:
-    config = SECTOR_BOARD_CONFIG[board_type]
-    url = (
-        "https://push2.eastmoney.com/api/qt/clist/get"
-        "?pn=1&pz=30&po=1&np=1"
-        "&ut=bd1d9ddb04089700cf9c27f6f7426281"
-        "&fltt=2&invt=2&fid=f3"
-        f"&fs={config['fs']}&fields=f12,f14,f3&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    diff = payload.get("data", {}).get("diff", [])
-    return diff if isinstance(diff, list) else []
+    sectors = tushare_sector_list(top_n=30)
+    return [{"f12": s["ts_code"], "f14": s.get("name", ""), "f3": s.get("pct_change", 0)} for s in sectors]
 
 
 def fetch_sector_board_history(code: str) -> List[dict[str, Any]]:
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
-        f"?secid=90.{code}"
-        "&ut=fa5fd1943c7b386f172d6893dbfba10b"
-        "&fields1=f1,f2,f3,f4,f5,f6"
-        "&fields2=f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61"
-        f"&klt=101&fqt=0&end=20500101&lmt=10&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    klines = payload.get("data", {}).get("klines", [])
-    name = payload.get("data", {}).get("name", code)
-    if not isinstance(klines, list):
+    rows = tushare_sector_kline(code, limit=10)
+    if not rows:
         return []
-
-    rows: List[dict[str, Any]] = []
-    for line in klines:
-        parts = str(line).split(",")
-        if len(parts) < 9:
-            continue
-        date = parts[0]
-        try:
-            pct_change = float(parts[8])
-        except ValueError:
-            continue
-        rows.append({"code": code, "name": name, "pctChange": pct_change, "date": date})
-    return rows
+    # 获取板块名称
+    name = code
+    for r in rows:
+        if r.get("name"):
+            name = r["name"]
+            break
+    result: List[dict[str, Any]] = []
+    for r in rows:
+        date_str = _fmt_date(r.get("trade_date", ""))
+        pct_change = float(r.get("pct_change", 0) or 0)
+        result.append({"code": code, "name": name, "pctChange": pct_change, "date": date_str})
+    return result
 
 
 def collect_sector_history_rows(board_type: str) -> List[dict[str, Any]]:

@@ -1,13 +1,11 @@
-﻿import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+﻿import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import GlassCard from './ui/GlassCard';
 import { Stock, LadderData } from '../types';
 import { getLimitUpLadderData } from '../services/stockService';
 import { getSingleDayCloseChange } from '../services/quotesService';
 import { Loader2, TrendingUp, Calendar, ChevronLeft, ChevronRight, Palette, Clock3 } from 'lucide-react';
-
-const StockHoverCard = React.lazy(() => import('./StockHoverCard'));
-
-const HOVER_CARD_DEFAULT_SIZE = { width: 900, height: 760 };
+import { useStockDialog } from '@/hooks/useStockDialog';
+import StockDialogWrapper from './StockDialogWrapper';
 
 const formatPct = (value?: number) => {
   if (value === undefined || value === null || Number.isNaN(value)) {
@@ -27,12 +25,7 @@ const LimitUpLadderSection: React.FC = () => {
   const [showColorChain, setShowColorChain] = useState(false);
   const [singleDayCloseMap, setSingleDayCloseMap] = useState<Record<string, number>>({});
   const [selectedStockSymbol, setSelectedStockSymbol] = useState<string | null>(null);
-  const [hoveredStock, setHoveredStock] = useState<Stock | null>(null);
-  const [cardPos, setCardPos] = useState({ x: 0, y: 0 });
-  const hoverCardSizeRef = useRef(HOVER_CARD_DEFAULT_SIZE);
-  const mousePosRef = useRef({ x: 0, y: 0 });
-  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { dialogState, openDialog, closeDialog, dialogRef } = useStockDialog();
 
   useEffect(() => {
     let mounted = true;
@@ -59,13 +52,6 @@ const LimitUpLadderSection: React.FC = () => {
   useEffect(() => {
     setSingleDayCloseMap({});
   }, [selectedDate]);
-
-  useEffect(() => {
-    return () => {
-      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-    };
-  }, []);
 
   const colorMap = useMemo<Record<string, React.CSSProperties>>(() => {
     if (!ladderData) return {} as Record<string, React.CSSProperties>;
@@ -265,65 +251,6 @@ const LimitUpLadderSection: React.FC = () => {
     setSelectedDate(d.toISOString().split('T')[0]);
   };
 
-  const updateHoverCardPosition = useCallback(() => {
-    const { width, height } = hoverCardSizeRef.current;
-    const padding = 16;
-    let x = mousePosRef.current.x + 20;
-    let y = mousePosRef.current.y + 20;
-    if (x + width + padding > window.innerWidth) {
-      x = Math.max(padding, mousePosRef.current.x - width - 20);
-    }
-    if (y + height + padding > window.innerHeight) {
-      y = Math.max(padding, window.innerHeight - height - padding);
-    }
-    setCardPos({ x, y });
-  }, []);
-
-  const openHoverCard = useCallback((stock: Stock) => {
-    setHoveredStock(stock);
-    updateHoverCardPosition();
-  }, [updateHoverCardPosition]);
-
-  const startCloseTimer = useCallback(() => {
-    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-    closeTimeoutRef.current = setTimeout(() => {
-      setHoveredStock(null);
-    }, 200);
-  }, []);
-
-  const handleMouseEnter = (event: React.MouseEvent, stock: Stock) => {
-    mousePosRef.current = { x: event.clientX, y: event.clientY };
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    hoverTimeoutRef.current = setTimeout(() => {
-      openHoverCard(stock);
-    }, 350);
-  };
-
-  const handleMouseMove = (event: React.MouseEvent) => {
-    mousePosRef.current = { x: event.clientX, y: event.clientY };
-    if (hoveredStock) {
-      updateHoverCardPosition();
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-      hoverTimeoutRef.current = null;
-    }
-    startCloseTimer();
-  };
-
-  const closeHoverInstant = () => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-    setHoveredStock(null);
-  };
-
   const renderSingleDayCard = (stock: Stock, groupCount: number) => {
     const isSelected = selectedStockSymbol === stock.symbol;
     const displayTime = stock.limitUpTime ?? '--:--';
@@ -336,10 +263,10 @@ const LimitUpLadderSection: React.FC = () => {
             : ''
         } ${isSelected ? 'ring-2 ring-amber-400 bg-amber-50/60 dark:bg-amber-500/10' : ''}`}
         style={getStockStyle(stock.name)}
-        onMouseEnter={(e) => handleMouseEnter(e, stock)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        onClick={() => setSelectedStockSymbol((prev) => (prev === stock.symbol ? null : stock.symbol))}
+        onClick={(e) => {
+          setSelectedStockSymbol((prev) => (prev === stock.symbol ? null : stock.symbol));
+          openDialog(stock, e);
+        }}
       >
         {stock.concepts?.[0] || stock.industry ? (
           <div
@@ -609,10 +536,10 @@ const LimitUpLadderSection: React.FC = () => {
                                 : ''
                             } ${isSelected ? 'ring-2 ring-amber-400 shadow-lg bg-amber-100/40 dark:bg-amber-500/10' : ''}`}
                             style={getStockStyle(stock.name)}
-                            onMouseEnter={(e) => handleMouseEnter(e, stock)}
-                            onMouseMove={handleMouseMove}
-                            onMouseLeave={handleMouseLeave}
-                            onClick={() => setSelectedStockSymbol((prev) => (prev === stock.symbol ? null : stock.symbol))}
+                            onClick={(e) => {
+                              setSelectedStockSymbol((prev) => (prev === stock.symbol ? null : stock.symbol));
+                              openDialog(stock, e);
+                            }}
                           >
                             {stock.concepts?.[0] || stock.industry ? (
                               <div
@@ -672,11 +599,6 @@ const LimitUpLadderSection: React.FC = () => {
     </div>
   );
 
-  const hoverCardFallback = (
-    <div className="w-[320px] h-[180px] rounded-lg border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/95 shadow-2xl flex items-center justify-center text-slate-500 dark:text-gray-400">
-      <Loader2 className="animate-spin" />
-    </div>
-  );
   return (
     <div className="h-full flex flex-col gap-6 relative">
       <GlassCard className="flex-1 min-h-0 flex flex-col overflow-visible" noPadding>
@@ -796,34 +718,13 @@ const LimitUpLadderSection: React.FC = () => {
         )}
       </GlassCard>
 
-      {hoveredStock && (
-        <div
-          className="fixed z-[99]"
-          style={{ left: cardPos.x, top: cardPos.y }}
-          onMouseEnter={() => {
-            if (closeTimeoutRef.current) {
-              clearTimeout(closeTimeoutRef.current);
-              closeTimeoutRef.current = null;
-            }
-          }}
-          onMouseLeave={startCloseTimer}
-        >
-          <React.Suspense fallback={hoverCardFallback}>
-            <StockHoverCard
-              stock={hoveredStock}
-              onSizeChange={(size) => {
-                hoverCardSizeRef.current = size || HOVER_CARD_DEFAULT_SIZE;
-                updateHoverCardPosition();
-              }}
-            />
-          </React.Suspense>
-          <button
-            className="absolute -top-3 -right-3 bg-slate-900 text-white rounded-full w-6 h-6 text-xs"
-            onClick={closeHoverInstant}
-          >
-            ×
-          </button>
-        </div>
+      {dialogState.stock && (
+        <StockDialogWrapper
+          stock={dialogState.stock}
+          position={dialogState.position}
+          onClose={closeDialog}
+          dialogRef={dialogRef}
+        />
       )}
     </div>
   );

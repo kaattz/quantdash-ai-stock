@@ -1,0 +1,12 @@
+{
+  "stage": "退潮",
+  "confidence": 83,
+  "riskLevel": "高风险",
+  "volumeState": "存量震荡",
+  "latestVolumeAmount": 12,
+  "volumeChangeRate": -2.73,
+  "reasons": [
+    "高位负反馈明显，龙头或高标承压",
+    "炸板修复率改善，亏钱效应减弱"
+  ]
+}

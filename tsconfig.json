@@ -30,7 +30,6 @@
   "exclude": [
     "dist",
     "node_modules",
-    "temp_index.js",
-    "tushareService.ts"
+    "temp_index.js"
   ]
 }

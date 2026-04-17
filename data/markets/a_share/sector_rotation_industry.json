@@ -1,10 +1,10 @@
 {
   "dates": [
+    "04-15",
+    "04-14",
     "04-13",
     "04-10",
-    "04-09",
-    "04-08",
-    "04-07"
+    "04-09"
   ],
   "ranks": [
     1,
@@ -17,6 +17,106 @@
     8
   ],
   "data": {
+    "04-15": {
+      "1": {
+        "code": "BK1147",
+        "name": "SPD概念",
+        "pctChange": 4.3,
+        "rank": 1
+      },
+      "2": {
+        "code": "BK0862",
+        "name": "超级真菌",
+        "pctChange": 3.74,
+        "rank": 2
+      },
+      "3": {
+        "code": "BK0944",
+        "name": "肝素概念",
+        "pctChange": 2.89,
+        "rank": 3
+      },
+      "4": {
+        "code": "BK1146",
+        "name": "减肥药",
+        "pctChange": 2.81,
+        "rank": 4
+      },
+      "5": {
+        "code": "BK1063",
+        "name": "重组蛋白",
+        "pctChange": 2.8,
+        "rank": 5
+      },
+      "6": {
+        "code": "BK1106",
+        "name": "创新药",
+        "pctChange": 2.43,
+        "rank": 6
+      },
+      "7": {
+        "code": "BK0870",
+        "name": "单抗概念",
+        "pctChange": 2.16,
+        "rank": 7
+      },
+      "8": {
+        "code": "BK0906",
+        "name": "流感",
+        "pctChange": 2.05,
+        "rank": 8
+      }
+    },
+    "04-14": {
+      "1": {
+        "code": "BK1051",
+        "name": "昨日连板_含一字",
+        "pctChange": 3.26,
+        "rank": 1
+      },
+      "2": {
+        "code": "BK0855",
+        "name": "纳米银",
+        "pctChange": 1.87,
+        "rank": 2
+      },
+      "3": {
+        "code": "BK1063",
+        "name": "重组蛋白",
+        "pctChange": 1.27,
+        "rank": 3
+      },
+      "4": {
+        "code": "BK0971",
+        "name": "注册制次新股",
+        "pctChange": 1.23,
+        "rank": 4
+      },
+      "5": {
+        "code": "BK0679",
+        "name": "超导概念",
+        "pctChange": 1.22,
+        "rank": 5
+      },
+      "6": {
+        "code": "BK0894",
+        "name": "阿兹海默",
+        "pctChange": 1.17,
+        "rank": 6
+      },
+      "7": {
+        "code": "BK1146",
+        "name": "减肥药",
+        "pctChange": 1.14,
+        "rank": 7
+      },
+      "8": {
+        "code": "BK0944",
+        "name": "肝素概念",
+        "pctChange": 1.08,
+        "rank": 8
+      }
+    },
     "04-13": {
       "1": {
         "code": "BK1051",
@@ -25,245 +125,145 @@
         "rank": 1
       },
       "2": {
-        "code": "BK1173",
-        "name": "锂矿概念",
-        "pctChange": 3.7,
-        "rank": 2
-      },
-      "3": {
-        "code": "BK1630",
-        "name": "昨日首板",
-        "pctChange": 3.06,
-        "rank": 3
-      },
-      "4": {
-        "code": "BK1050",
-        "name": "昨日涨停_含一字",
-        "pctChange": 2.83,
-        "rank": 4
-      },
-      "5": {
         "code": "BK0855",
         "name": "纳米银",
         "pctChange": 2.6,
+        "rank": 2
+      },
+      "3": {
+        "code": "BK0971",
+        "name": "注册制次新股",
+        "pctChange": 1.23,
+        "rank": 3
+      },
+      "4": {
+        "code": "BK0679",
+        "name": "超导概念",
+        "pctChange": -0.33,
+        "rank": 4
+      },
+      "5": {
+        "code": "BK0870",
+        "name": "单抗概念",
+        "pctChange": -0.34,
         "rank": 5
       },
       "6": {
-        "code": "BK0816",
-        "name": "昨日连板",
-        "pctChange": 2.47,
+        "code": "BK1063",
+        "name": "重组蛋白",
+        "pctChange": -0.59,
         "rank": 6
       },
       "7": {
-        "code": "BK1645",
-        "name": "昨日打二板以上表现",
-        "pctChange": 2.44,
+        "code": "BK1106",
+        "name": "创新药",
+        "pctChange": -0.86,
         "rank": 7
       },
       "8": {
-        "code": "BK0815",
-        "name": "昨日涨停",
-        "pctChange": 2.39,
+        "code": "BK1085",
+        "name": "痘病毒防治",
+        "pctChange": -0.94,
         "rank": 8
       }
     },
     "04-10": {
       "1": {
-        "code": "BK0816",
-        "name": "昨日连板",
-        "pctChange": 4.09,
-        "rank": 1
-      },
-      "2": {
         "code": "BK1051",
         "name": "昨日连板_含一字",
         "pctChange": 4.05,
-        "rank": 2
+        "rank": 1
       },
-      "3": {
+      "2": {
         "code": "BK0855",
         "name": "纳米银",
         "pctChange": 3.57,
+        "rank": 2
+      },
+      "3": {
+        "code": "BK1146",
+        "name": "减肥药",
+        "pctChange": 1.43,
         "rank": 3
       },
       "4": {
-        "code": "BK0951",
-        "name": "刀片电池",
-        "pctChange": 3.51,
+        "code": "BK0679",
+        "name": "超导概念",
+        "pctChange": 1.0,
         "rank": 4
       },
       "5": {
-        "code": "BK1173",
-        "name": "锂矿概念",
-        "pctChange": 2.51,
+        "code": "BK1063",
+        "name": "重组蛋白",
+        "pctChange": 0.99,
         "rank": 5
       },
       "6": {
-        "code": "BK1050",
-        "name": "昨日涨停_含一字",
-        "pctChange": 1.92,
+        "code": "BK0944",
+        "name": "肝素概念",
+        "pctChange": 0.95,
         "rank": 6
       },
       "7": {
-        "code": "BK0674",
-        "name": "蓝宝石",
-        "pctChange": 1.65,
+        "code": "BK1085",
+        "name": "痘病毒防治",
+        "pctChange": 0.93,
         "rank": 7
       },
       "8": {
-        "code": "BK1630",
-        "name": "昨日首板",
-        "pctChange": 1.46,
+        "code": "BK0971",
+        "name": "注册制次新股",
+        "pctChange": 0.7,
         "rank": 8
       }
     },
     "04-09": {
       "1": {
-        "code": "BK1128",
-        "name": "CPO概念",
-        "pctChange": 2.35,
-        "rank": 1
-      },
-      "2": {
-        "code": "BK1088",
-        "name": "F5G概念",
-        "pctChange": 2.31,
-        "rank": 2
-      },
-      "3": {
         "code": "BK1051",
         "name": "昨日连板_含一字",
         "pctChange": 1.92,
-        "rank": 3
-      },
-      "4": {
-        "code": "BK1630",
-        "name": "昨日首板",
-        "pctChange": 1.82,
-        "rank": 4
-      },
-      "5": {
-        "code": "BK1050",
-        "name": "昨日涨停_含一字",
-        "pctChange": 1.77,
-        "rank": 5
-      },
-      "6": {
-        "code": "BK0815",
-        "name": "昨日涨停",
-        "pctChange": 1.63,
-        "rank": 6
-      },
-      "7": {
-        "code": "BK1637",
-        "name": "东方财富热股",
-        "pctChange": 1.56,
-        "rank": 7
-      },
-      "8": {
-        "code": "BK1136",
-        "name": "光通信模块",
-        "pctChange": 1.52,
-        "rank": 8
-      }
-    },
-    "04-08": {
-      "1": {
-        "code": "BK0855",
-        "name": "纳米银",
-        "pctChange": 7.37,
         "rank": 1
       },
       "2": {
-        "code": "BK1128",
-        "name": "CPO概念",
-        "pctChange": 7.12,
-        "rank": 2
-      },
-      "3": {
-        "code": "BK0885",
-        "name": "VPN",
-        "pctChange": 6.55,
-        "rank": 3
-      },
-      "4": {
-        "code": "BK0877",
-        "name": "PCB",
-        "pctChange": 6.4,
-        "rank": 4
-      },
-      "5": {
-        "code": "BK0674",
-        "name": "蓝宝石",
-        "pctChange": 6.0,
-        "rank": 5
-      },
-      "6": {
-        "code": "BK1088",
-        "name": "F5G概念",
-        "pctChange": 5.93,
-        "rank": 6
-      },
-      "7": {
-        "code": "BK1136",
-        "name": "光通信模块",
-        "pctChange": 5.92,
-        "rank": 7
-      },
-      "8": {
-        "code": "BK0890",
-        "name": "MLCC",
-        "pctChange": 5.8,
-        "rank": 8
-      }
-    },
-    "04-07": {
-      "1": {
-        "code": "BK1051",
-        "name": "昨日连板_含一字",
-        "pctChange": 6.25,
-        "rank": 1
-      },
-      "2": {
-        "code": "BK1645",
-        "name": "昨日打二板以上表现",
-        "pctChange": 5.88,
-        "rank": 2
-      },
-      "3": {
-        "code": "BK0816",
-        "name": "昨日连板",
-        "pctChange": 5.59,
-        "rank": 3
-      },
-      "4": {
-        "code": "BK0887",
-        "name": "鸡肉概念",
-        "pctChange": 3.36,
-        "rank": 4
-      },
-      "5": {
-        "code": "BK0882",
-        "name": "猪肉概念",
-        "pctChange": 2.94,
-        "rank": 5
-      },
-      "6": {
-        "code": "BK0877",
-        "name": "PCB",
-        "pctChange": 2.26,
-        "rank": 6
-      },
-      "7": {
         "code": "BK0855",
         "name": "纳米银",
-        "pctChange": 1.93,
+        "pctChange": 1.38,
+        "rank": 2
+      },
+      "3": {
+        "code": "BK0679",
+        "name": "超导概念",
+        "pctChange": -0.66,
+        "rank": 3
+      },
+      "4": {
+        "code": "BK0971",
+        "name": "注册制次新股",
+        "pctChange": -1.38,
+        "rank": 4
+      },
+      "5": {
+        "code": "BK0698",
+        "name": "免疫治疗",
+        "pctChange": -1.55,
+        "rank": 5
+      },
+      "6": {
+        "code": "BK0615",
+        "name": "中药概念",
+        "pctChange": -1.61,
+        "rank": 6
+      },
+      "7": {
+        "code": "BK1146",
+        "name": "减肥药",
+        "pctChange": -1.63,
         "rank": 7
       },
       "8": {
-        "code": "BK1638",
-        "name": "最近多板",
-        "pctChange": 1.87,
+        "code": "BK0675",
+        "name": "病毒防治",
+        "pctChange": -1.64,
         "rank": 8
       }
     }

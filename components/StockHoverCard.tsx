@@ -6,6 +6,8 @@ import { ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, C
 import { Loader2, Plus, LayoutGrid, FileText, Info, Lock, Maximize2, Minimize2, Sparkles } from 'lucide-react';
 import { emitAIStockObservationRequest } from '../services/aiNavigationService';
 import { analyzeChanStructure } from '../services/chanService';
+import NewsPanel from './NewsPanel';
+import ProfilePanel from './ProfilePanel';
 
 interface CardSize {
   width: number;
@@ -185,6 +187,8 @@ const calcVR = (data: any[], period: number = 26) => {
 };
 
 
+type PanelType = 'chart' | 'news' | 'profile';
+
 const CARD_LAYOUT = {
   default: { width: 900, minHeight: 720, main: 260, volume: 90, tech: 180 },
   expanded: { width: 1100, minHeight: 900, main: 330, volume: 120, tech: 240 }
@@ -213,6 +217,10 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
   const [showMA, setShowMA] = useState(true);
   const [showChanStructure, setShowChanStructure] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [activePanel, setActivePanel] = useState<PanelType>('chart');
+  const togglePanel = (panel: 'news' | 'profile') => {
+    setActivePanel(prev => prev === panel ? 'chart' : panel);
+  };
   const layout = isExpanded ? CARD_LAYOUT.expanded : CARD_LAYOUT.default;
   useEffect(() => {
     if (typeof window === 'undefined' || !onSizeChange) return;
@@ -571,7 +579,8 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
         </div>
       </div>
 
-      {/* Period Tabs */}
+      {/* Period Tabs - 仅在 chart 模式下显示 */}
+      {activePanel === 'chart' && (
       <div className="flex border-b border-slate-200 dark:border-slate-700 text-sm bg-slate-50 dark:bg-[#161a25] z-20 relative">
         {[
           { label: '日K', val: 101 }, { label: '周K', val: 102 }, { label: '月K', val: 103 },
@@ -585,8 +594,10 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
           </button>
         ))}
       </div>
+      )}
 
-      {/* Stats Row */}
+      {/* Stats Row - 仅在 chart 模式下显示 */}
+      {activePanel === 'chart' && (
       <div className="px-2 py-1 flex text-xs font-mono justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#161a25] z-20 relative h-[24px]">
          {activeItem ? (
              <>
@@ -599,8 +610,10 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
              </>
          ) : <span>-</span>}
       </div>
+      )}
 
-      {/* Indicator Legend */}
+      {/* Indicator Legend - 仅在 chart 模式下显示 */}
+      {activePanel === 'chart' && (
       <div className="px-2 py-1 flex text-[11px] font-mono gap-4 items-center bg-white dark:bg-[#161a25] z-20 relative h-[24px]">
          {activeItem && showMA && (
              activeTech === 'BOLL' ? (
@@ -624,8 +637,10 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
            </span>
          )}
       </div>
+      )}
 
       {/* UNIFIED CHART CONTAINER WITH OVERLAY */}
+      {activePanel === 'chart' ? (
       <div 
          className={`flex-1 flex flex-col bg-white dark:bg-[#161a25] relative select-none ${isDragging.current ? 'cursor-grabbing' : 'cursor-crosshair'}`}
          ref={chartAreaRef}
@@ -932,8 +947,18 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
              </div>
          )}
       </div>
+      ) : activePanel === 'news' ? (
+      <div className="flex-1 bg-white dark:bg-[#161a25]">
+        <NewsPanel stock={stock} />
+      </div>
+      ) : (
+      <div className="flex-1 bg-white dark:bg-[#161a25]">
+        <ProfilePanel stock={stock} />
+      </div>
+      )}
 
-      {/* Tech Tabs */}
+      {/* Tech Tabs - 仅在 chart 模式下显示 */}
+      {activePanel === 'chart' ? (
       <div className="flex border-t border-b border-slate-200 dark:border-slate-700 text-xs bg-slate-50 dark:bg-[#1e222d] overflow-x-auto z-20 relative">
         <button
           onClick={() => setShowMA(prev => !prev)}
@@ -965,6 +990,16 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
           </div>
         ))}
       </div>
+      ) : (
+      <div className="flex border-t border-b border-slate-200 dark:border-slate-700 text-xs bg-slate-50 dark:bg-[#1e222d] z-20 relative">
+        <button
+          onClick={() => setActivePanel('chart')}
+          className="px-4 py-2 text-[#f0b90b] hover:bg-amber-50 dark:hover:bg-amber-500/10 transition-colors"
+        >
+          ← 返回K线
+        </button>
+      </div>
+      )}
 
       {/* Footer Buttons */}
       <div className="grid grid-cols-2 gap-3 p-3 bg-white dark:bg-[#1e222d] z-20 relative xl:grid-cols-5">
@@ -980,10 +1015,24 @@ const StockHoverCard: React.FC<StockHoverCardProps> = ({ stock, onSizeChange }) 
         >
           <Sparkles size={14} /> AI观察
         </button>
-        <button className="flex-1 flex items-center justify-center gap-1 bg-slate-100 dark:bg-[#2b313f] hover:bg-slate-200 dark:hover:bg-[#363c4e] text-slate-700 dark:text-[#e1e4ea] text-xs py-2 rounded transition-colors">
+        <button
+          onClick={() => togglePanel('news')}
+          className={`flex-1 flex items-center justify-center gap-1 text-xs py-2 rounded transition-colors ${
+            activePanel === 'news'
+              ? 'bg-[#f0b90b]/10 text-[#f0b90b] border border-[#f0b90b]/30'
+              : 'bg-slate-100 dark:bg-[#2b313f] hover:bg-slate-200 dark:hover:bg-[#363c4e] text-slate-700 dark:text-[#e1e4ea]'
+          }`}
+        >
           <FileText size={14} /> 个股资讯
         </button>
-        <button className="flex-1 flex items-center justify-center gap-1 bg-slate-100 dark:bg-[#2b313f] hover:bg-slate-200 dark:hover:bg-[#363c4e] text-slate-700 dark:text-[#e1e4ea] text-xs py-2 rounded transition-colors">
+        <button
+          onClick={() => togglePanel('profile')}
+          className={`flex-1 flex items-center justify-center gap-1 text-xs py-2 rounded transition-colors ${
+            activePanel === 'profile'
+              ? 'bg-[#f0b90b]/10 text-[#f0b90b] border border-[#f0b90b]/30'
+              : 'bg-slate-100 dark:bg-[#2b313f] hover:bg-slate-200 dark:hover:bg-[#363c4e] text-slate-700 dark:text-[#e1e4ea]'
+          }`}
+        >
           <Info size={14} /> 个股资料
         </button>
       </div>

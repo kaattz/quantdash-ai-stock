@@ -1,53 +1,5 @@
 [
   {
-    "date": "2026-03-11",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 2154,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-12",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 1936,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-13",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 1651,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-16",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 1882,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
     "date": "2026-03-17",
     "value": 2,
     "height": 0,
@@ -86,76 +38,54 @@
   {
     "date": "2026-03-20",
     "value": 2,
-    "height": 5,
-    "limitUpCount": 28,
+    "height": 0,
+    "limitUpCount": 0,
     "limitDownCount": 0,
-    "riseCount": 1341,
+    "riseCount": 1229,
     "rawZt": {
-      "counts": {
-        "5": 2,
-        "1": 21,
-        "3": 2,
-        "2": 3
-      },
-      "total": 28
+      "counts": {},
+      "total": 0
     }
   },
   {
     "date": "2026-03-23",
-    "value": 4.44,
-    "height": 6,
-    "limitUpCount": 28,
+    "value": 2,
+    "height": 0,
+    "limitUpCount": 0,
     "limitDownCount": 0,
-    "riseCount": 586,
+    "riseCount": 474,
     "rawZt": {
-      "counts": {
-        "2": 2,
-        "1": 23,
-        "4": 1,
-        "6": 1,
-        "3": 1
-      },
-      "total": 28
+      "counts": {},
+      "total": 0
     }
   },
   {
     "date": "2026-03-24",
-    "value": 3.75,
-    "height": 7,
-    "limitUpCount": 83,
+    "value": 2,
+    "height": 0,
+    "limitUpCount": 0,
     "limitDownCount": 0,
-    "riseCount": 2866,
+    "riseCount": 2534,
     "rawZt": {
-      "counts": {
-        "3": 1,
-        "1": 77,
-        "2": 4,
-        "7": 1
-      },
-      "total": 83
+      "counts": {},
+      "total": 0
     }
   },
   {
     "date": "2026-03-25",
-    "value": 8.33,
-    "height": 8,
-    "limitUpCount": 84,
+    "value": 2,
+    "height": 0,
+    "limitUpCount": 0,
     "limitDownCount": 0,
-    "riseCount": 2997,
+    "riseCount": 2661,
     "rawZt": {
-      "counts": {
-        "2": 19,
-        "1": 61,
-        "3": 2,
-        "8": 1,
-        "4": 1
-      },
-      "total": 84
+      "counts": {},
+      "total": 0
     }
   },
   {
     "date": "2026-03-26",
-    "value": 0.53,
+    "value": 2,
     "height": 3,
     "limitUpCount": 39,
     "limitDownCount": 0,
@@ -208,7 +138,7 @@
     "height": 4,
     "limitUpCount": 53,
     "limitDownCount": 0,
-    "riseCount": 1678,
+    "riseCount": 1679,
     "rawZt": {
       "counts": {
         "1": 45,
@@ -294,8 +224,8 @@
     "riseCount": 3563,
     "rawZt": {
       "counts": {
-        "4": 1,
         "1": 112,
+        "4": 1,
         "2": 9,
         "3": 1
       },
@@ -328,12 +258,83 @@
     "riseCount": 2248,
     "rawZt": {
       "counts": {
-        "1": 46,
         "3": 3,
         "2": 9,
+        "1": 46,
         "4": 1
       },
       "total": 59
+    }
+  },
+  {
+    "date": "2026-04-13",
+    "value": 5.19,
+    "height": 5,
+    "limitUpCount": 59,
+    "limitDownCount": 0,
+    "riseCount": 2520,
+    "rawZt": {
+      "counts": {
+        "3": 2,
+        "1": 51,
+        "5": 1,
+        "2": 4,
+        "4": 1
+      },
+      "total": 59
+    }
+  },
+  {
+    "date": "2026-04-14",
+    "value": 5.62,
+    "height": 6,
+    "limitUpCount": 55,
+    "limitDownCount": 0,
+    "riseCount": 2543,
+    "rawZt": {
+      "counts": {
+        "2": 6,
+        "1": 45,
+        "6": 1,
+        "4": 2,
+        "3": 1
+      },
+      "total": 55
+    }
+  },
+  {
+    "date": "2026-04-15",
+    "value": 2.08,
+    "height": 5,
+    "limitUpCount": 57,
+    "limitDownCount": 0,
+    "riseCount": 2031,
+    "rawZt": {
+      "counts": {
+        "3": 2,
+        "1": 46,
+        "2": 8,
+        "5": 1
+      },
+      "total": 57
+    }
+  },
+  {
+    "date": "2026-04-16",
+    "value": 5.42,
+    "height": 6,
+    "limitUpCount": 79,
+    "limitDownCount": 0,
+    "riseCount": 2726,
+    "rawZt": {
+      "counts": {
+        "4": 1,
+        "1": 71,
+        "2": 5,
+        "6": 1,
+        "3": 1
+      },
+      "total": 79
     }
   }
 ]

@@ -7,9 +7,12 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
-from data_fetch_utils import MARKET_DATA_DIR, fetch_with_fallbacks, now_millis, read_json as read_local_json, save_json
+from data_fetch_utils import MARKET_DATA_DIR, read_json as read_local_json, save_json, tushare_index_kline, tushare_limit_up_pool, tushare_limit_down_pool, _fmt_date
 
 RECENT_SENTIMENT_TRADING_DAYS = 22
+
+# 缓存涨停/跌停池数据，避免同一日期重复请求
+_LIMIT_POOL_CACHE: Dict[str, List[dict[str, Any]]] = {}
 
 
 def format_date(value: datetime) -> str:
@@ -33,49 +36,34 @@ def get_trading_dates(end_date: datetime, count: int) -> List[str]:
 
 
 def fetch_index_klines() -> List[dict[str, Any]]:
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
-        "?secid=1.000001&fields1=f1&fields2=f51,f52,f53,f54,f55,f57"
-        f"&klt=101&fqt=1&end=20500101&lmt=260&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    klines = payload.get("data", {}).get("klines", [])
-    if not isinstance(klines, list):
-        return []
+    rows = tushare_index_kline("000001.SH", limit=260)
     result = []
-    for item in klines:
-        date, open_price, close_price, high, low, volume = str(item).split(",")[:6]
-        result.append(
-            {
-                "date": date,
-                "open": float(open_price),
-                "close": float(close_price),
-                "high": float(high),
-                "low": float(low),
-                "volume": float(volume),
-            }
-        )
+    for r in rows:
+        result.append({
+            "date": _fmt_date(r.get("trade_date", "")),
+            "open": float(r.get("open", 0) or 0),
+            "close": float(r.get("close", 0) or 0),
+            "high": float(r.get("high", 0) or 0),
+            "low": float(r.get("low", 0) or 0),
+            "volume": float(r.get("vol", 0) or 0),
+        })
     return result
 
 
 def fetch_limit_pool(date_str: str, pool_type: str) -> List[dict[str, Any]]:
+    """通过 tushare limit_list_d 获取涨停/跌停池数据。"""
+    cache_key = f"{date_str}_{pool_type}"
+    if cache_key in _LIMIT_POOL_CACHE:
+        return _LIMIT_POOL_CACHE[cache_key]
+
     api_date = date_str.replace("-", "")
     if pool_type == "up":
-        url = (
-            "https://push2ex.eastmoney.com/getTopicZTPool"
-            "?ut=7eea3edcaed734bea9cbfc24409ed989"
-            f"&dpt=wz.ztzt&Pageindex=0&pagesize=1000&sort=fbt%3Aasc&date={api_date}&_={now_millis()}"
-        )
+        result = tushare_limit_up_pool(api_date)
     else:
-        url = (
-            "https://push2ex.eastmoney.com/getTopicDTPool"
-            "?ut=7eea3edcaed734bea9cbfc24409ed989"
-            f"&Pageindex=0&pagesize=1000&sort=fbt%3Aasc&date={api_date}&_={now_millis()}"
-        )
-    payload = fetch_with_fallbacks(url)
-    data = payload.get("data") or {}
-    pool = data.get("pool", [])
-    return pool if isinstance(pool, list) else []
+        result = tushare_limit_down_pool(api_date)
+
+    _LIMIT_POOL_CACHE[cache_key] = result
+    return result
 
 
 def estimate_rise_count(kline: dict[str, Any] | None, limit_up_count: int, limit_down_count: int) -> int:

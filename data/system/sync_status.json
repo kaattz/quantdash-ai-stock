@@ -1,45 +1,92 @@
 {
-  "trigger": "sync:all",
-  "startedAt": "2026-04-13T12:28:07.596Z",
-  "finishedAt": "2026-04-13T13:19:47.423Z",
-  "durationMs": 3099827,
-  "updatedAt": "2026-04-13T13:19:47.423Z",
-  "overallStatus": "failed",
+  "trigger": "startup-sync",
+  "startedAt": "2026-04-16T19:12:19.059Z",
+  "finishedAt": "2026-04-16T19:18:07.668Z",
+  "durationMs": 348609,
+  "updatedAt": "2026-04-16T19:18:07.668Z",
+  "overallStatus": "completed",
   "counts": {
-    "completed": 1,
-    "skipped": 0,
-    "failed": 1,
-    "total": 2
+    "completed": 4,
+    "skipped": 3,
+    "failed": 0,
+    "total": 7
   },
-  "onlineTradingDate": "2026-04-10",
-  "onlineMonthDay": "04-10",
+  "onlineTradingDate": "2026-04-16",
+  "onlineMonthDay": "04-16",
   "latestSnapshots": {
-    "sentiment": "2026-04-10",
-    "performance": "04-10",
-    "emotion": "2026-04-10",
-    "cycle": "03-30",
-    "klineManifestCount": 32,
-    "klineManifestStamp": "2026-03-31"
+    "sentiment": "2026-04-16",
+    "performance": "04-16",
+    "emotion": "2026-04-15",
+    "cycle": "04-16",
+    "klineManifestCount": 5583,
+    "klineManifestStamp": "2026-04-17"
   },
   "stages": [
     {
-      "key": "market-pipeline",
-      "name": "Market Data Pipeline",
-      "status": "failed",
-      "reason": "py exited with code 1",
-      "startedAt": "2026-04-13T12:28:07.779Z",
-      "finishedAt": "2026-04-13T13:15:25.422Z",
-      "durationMs": 2837643
+      "key": "stock-snapshots",
+      "name": "Stock Snapshots (tushare)",
+      "status": "completed",
+      "reason": null,
+      "startedAt": "2026-04-16T19:12:19.235Z",
+      "finishedAt": "2026-04-16T19:14:19.997Z",
+      "durationMs": 120762
+    },
+    {
+      "key": "market-core",
+      "name": "Market Core Snapshot",
+      "status": "skipped",
+      "reason": "already up-to-date (2026-04-16)",
+      "startedAt": "2026-04-16T19:14:20.006Z",
+      "finishedAt": "2026-04-16T19:14:20.006Z",
+      "durationMs": 0
     },
     {
       "key": "emotion",
       "name": "Emotion Indicators",
       "status": "completed",
       "reason": null,
-      "startedAt": "2026-04-13T13:15:25.423Z",
-      "finishedAt": "2026-04-13T13:19:47.423Z",
-      "durationMs": 262000
+      "startedAt": "2026-04-16T19:14:20.012Z",
+      "finishedAt": "2026-04-16T19:14:25.377Z",
+      "durationMs": 5365
+    },
+    {
+      "key": "sectors",
+      "name": "Sector Snapshots",
+      "status": "skipped",
+      "reason": "already updated on 2026-04-16",
+      "startedAt": "2026-04-16T19:14:25.378Z",
+      "finishedAt": "2026-04-16T19:14:25.378Z",
+      "durationMs": 0
+    },
+    {
+      "key": "cycle",
+      "name": "Sentiment Cycle Snapshots",
+      "status": "skipped",
+      "reason": "already up-to-date (04-16)",
+      "startedAt": "2026-04-16T19:14:25.380Z",
+      "finishedAt": "2026-04-16T19:14:25.380Z",
+      "durationMs": 0
+    },
+    {
+      "key": "kline-library",
+      "name": "K-Line Library (tushare)",
+      "status": "completed",
+      "reason": null,
+      "startedAt": "2026-04-16T19:14:25.380Z",
+      "finishedAt": "2026-04-16T19:18:06.859Z",
+      "durationMs": 221479
+    },
+    {
+      "key": "stock-company",
+      "name": "Stock Company Info (tushare)",
+      "status": "completed",
+      "reason": null,
+      "startedAt": "2026-04-16T19:18:06.859Z",
+      "finishedAt": "2026-04-16T19:18:07.666Z",
+      "durationMs": 807
     }
   ],
-  "extra": {}
+  "extra": {
+    "mode": "startup"
+  }
 }

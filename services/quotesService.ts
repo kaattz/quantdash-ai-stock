@@ -1,7 +1,6 @@
 import { Stock, KlineData } from '../types';
 import { MOCK_STOCKS } from '../constants';
 import { db, STORES } from './db';
-import { fetchJsonWithFallback } from './eastmoneyService';
 import { loadLocalJsonFile } from './localDataService';
 
 type LocalKlineFile = {
@@ -318,6 +317,13 @@ export const getChiNextList = async (): Promise<Stock[]> => {
   }
 };
 
+/**
+ * 获取个股 K 线数据。
+ * 数据来源：本地 JSON 文件（由 Python 后端通过 tushare 同步）。
+ * 如果本地无数据则返回 mock 数据。
+ *
+ * 运行 `node scripts/syncKlineLibraryPy.js` 可同步最新 K 线数据。
+ */
 export const getStockKline = async (symbol: string, period: number = 101): Promise<KlineData[]> => {
   const cacheKey = `${symbol}_${period}`;
   if (KLINE_CACHE.has(cacheKey)) {
@@ -330,33 +336,12 @@ export const getStockKline = async (symbol: string, period: number = 101): Promi
     return localSeries;
   }
 
-  try {
-    const secid = getSecidForSymbol(symbol);
-    const url = `https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=${secid}&fields1=f1&fields2=f51,f52,f53,f54,f55,f57&klt=${period}&fqt=1&end=20500101&lmt=200&_=${Date.now()}`;
-    const json = await fetchJsonWithFallback(url);
-
-    let result: KlineData[] = [];
-    if (json.data && json.data.klines) {
-      result = json.data.klines.map((item: string) => {
-        const [date, open, close, high, low, volume] = item.split(',');
-        return {
-          date,
-          open: Number(open),
-          close: Number(close),
-          high: Number(high),
-          low: Number(low),
-          volume: Number(volume),
-        };
-      });
-    } else {
-      throw new Error('No kline data in response');
-    }
-
-    KLINE_CACHE.set(cacheKey, result);
-    return result;
-  } catch {
-    return generateMockKlines(symbol, period);
-  }
+  // 本地无数据，返回 mock（提示用户运行同步脚本）
+  console.warn(
+    `[quotesService] 本地无 ${symbol} K线数据，使用模拟数据。` +
+    `请运行 node scripts/syncKlineLibraryPy.js 同步最新数据。`
+  );
+  return generateMockKlines(symbol, period);
 };
 
 export const getSingleDayCloseChange = async (symbol: string, dateStr?: string): Promise<number | null> => {

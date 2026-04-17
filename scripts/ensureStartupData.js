@@ -1,7 +1,10 @@
 import { syncEmotionIndicators } from './syncEmotionIndicators.js';
+import { syncKlineLibraryPy } from './syncKlineLibraryPy.js';
 import { syncMarketCorePy } from './syncMarketCorePy.js';
 import { syncSectorSnapshotsPy } from './syncSectorSnapshotsPy.js';
 import { syncSentimentCycleSnapshotsPy } from './syncSentimentCycleSnapshotsPy.js';
+import { syncStockCompany } from './syncStockCompany.js';
+import { syncStockSnapshotsPy } from './syncStockSnapshotsPy.js';
 import {
   getFileDateStamp,
   getOrCreateSyncContext,
@@ -17,6 +20,11 @@ const SYNC_MODE = String(process.env.STARTUP_SYNC_MODE ?? 'startup').toLowerCase
 const log = (...args) => console.log('[startup-sync]', ...args);
 
 const runLightweightStartupSync = async () => runStagesSequentially([
+  {
+    key: 'stock-snapshots',
+    name: 'Stock Snapshots (tushare)',
+    run: syncStockSnapshotsPy,
+  },
   {
     key: 'market-core',
     name: 'Market Core Snapshot',
@@ -42,9 +50,15 @@ const runLightweightStartupSync = async () => runStagesSequentially([
     shouldRun: async (context) => {
       const emotion = await readJsonFile('emotion_indicators.json');
       const latestEmotion = Array.isArray(emotion) ? emotion.at(-1)?.date : null;
-      return latestEmotion === context.emotionTargetDate
-        ? `already up-to-date (${context.emotionTargetDate})`
-        : true;
+      const bullBear = await readJsonFile('bull_bear_signal.json');
+      const latestBullBear = Array.isArray(bullBear) ? bullBear.at(-1)?.date : null;
+      // 两个文件都必须是最新的才跳过
+      const emotionUpToDate = latestEmotion === context.emotionTargetDate;
+      const bullBearUpToDate = latestBullBear && latestBullBear >= context.onlineTradingDate;
+      if (emotionUpToDate && bullBearUpToDate) {
+        return `already up-to-date (${context.emotionTargetDate})`;
+      }
+      return true;
     },
   },
   {
@@ -69,6 +83,16 @@ const runLightweightStartupSync = async () => runStagesSequentially([
         ? `already up-to-date (${context.onlineMonthDay})`
         : true;
     },
+  },
+  {
+    key: 'kline-library',
+    name: 'K-Line Library (tushare)',
+    run: syncKlineLibraryPy,
+  },
+  {
+    key: 'stock-company',
+    name: 'Stock Company Info (tushare)',
+    run: syncStockCompany,
   },
 ], {
   resolveContext: getOrCreateSyncContext,

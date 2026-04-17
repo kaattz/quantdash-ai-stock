@@ -83,28 +83,45 @@ export const getFileDateStamp = async (fileName) => {
 };
 
 export const getLatestOnlineTradingDate = async () => {
-  const url =
+  // 优先尝试东方财富
+  const emUrl =
     'https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=1.000001&fields1=f1&fields2=f51&klt=101&fqt=1&end=20500101&lmt=1&_=' +
     Date.now();
-  const res = await fetch(url, {
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119 Safari/537.36',
-    },
+  try {
+    const res = await fetch(emUrl, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119 Safari/537.36',
+      },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      const latest = data?.data?.klines?.[0];
+      if (latest) {
+        const [dateStr] = String(latest).split(',');
+        if (dateStr) return dateStr;
+      }
+    }
+  } catch {
+    // 东方财富不可用，尝试新浪 fallback
+  }
+
+  // 新浪财经 fallback
+  const sinaUrl =
+    'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh000001&scale=240&ma=no&datalen=1';
+  const sinaRes = await fetch(sinaUrl, {
+    headers: { 'User-Agent': 'Mozilla/5.0' },
+    signal: AbortSignal.timeout(8000),
   });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch latest trading date: HTTP ${res.status}`);
+  if (!sinaRes.ok) {
+    throw new Error(`Failed to fetch latest trading date from Sina: HTTP ${sinaRes.status}`);
   }
-  const data = await res.json();
-  const latest = data?.data?.klines?.[0];
-  if (!latest) {
-    throw new Error('Latest trading date missing from EastMoney response');
+  const sinaData = await sinaRes.json();
+  if (!Array.isArray(sinaData) || !sinaData.length || !sinaData[0]?.day) {
+    throw new Error('Latest trading date missing from Sina response');
   }
-  const [dateStr] = String(latest).split(',');
-  if (!dateStr) {
-    throw new Error('Unable to parse latest trading date');
-  }
-  return dateStr;
+  return sinaData[0].day;
 };
 
 const parseMonthDay = (value, referenceDate = new Date()) => {

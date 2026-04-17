@@ -1,139 +1,156 @@
 from __future__ import annotations
 
+import os
 import sys
 import time
 from typing import Any, Dict, List
 
-from data_fetch_utils import fetch_with_fallbacks, now_millis, save_json
+from data_fetch_utils import (
+    save_json,
+    read_json,
+    tushare_rows,
+    tushare_full_market,
+    _fmt_date,
+    _today_str,
+    _date_n_days_ago,
+)
+
+FORCE_CONCEPT_REFRESH = os.getenv("FORCE_CONCEPT_REFRESH") == "1"
 
 
-STOCK_LIST_PAGE_SIZE = 500
-CONCEPT_BOARD_PAGE_SIZE = 100
+def _safe_float(val: Any, default: float = 0.0) -> float:
+    try:
+        if val in (None, "", "-"):
+            return default
+        return float(val)
+    except (TypeError, ValueError):
+        return default
 
 
-def build_stock_list_url(page: int, fs_query: str, fields: str, size: int = STOCK_LIST_PAGE_SIZE) -> str:
-    return (
-        "https://push2.eastmoney.com/api/qt/clist/get"
-        f"?pn={page}&pz={size}&po=1&np=1"
-        "&ut=bd1d9ddb04089700cf9c27f6f7426281"
-        "&fltt=2&invt=2&fid=f3"
-        f"&fs={fs_query}&fields={fields}&_={now_millis()}"
-    )
+# =========================================================================
+# 全市场股票快照（替代 push2.eastmoney.com/api/qt/clist/get）
+# =========================================================================
+
+def fetch_full_market_stocks() -> List[Dict[str, Any]]:
+    """通过 tushare 获取全市场股票快照，返回与原 eastmoney 格式兼容的结构。"""
+    print("[stocks-py] Fetching full market via tushare daily + daily_basic + stock_basic...")
+
+    trade_date = _today_str()
+
+    # 日线行情：价格、涨跌幅、成交量、成交额
+    daily_rows = tushare_rows("daily", {"trade_date": trade_date},
+                              "ts_code,close,pct_chg,vol,amount")
+    if not daily_rows:
+        trade_date = _date_n_days_ago(1)
+        daily_rows = tushare_rows("daily", {"trade_date": trade_date},
+                                  "ts_code,close,pct_chg,vol,amount")
+    if not daily_rows:
+        trade_date = _date_n_days_ago(2)
+        daily_rows = tushare_rows("daily", {"trade_date": trade_date},
+                                  "ts_code,close,pct_chg,vol,amount")
+
+    daily_map: Dict[str, Dict] = {r["ts_code"]: r for r in daily_rows}
+
+    # 基本面指标：PE、PB、总市值
+    basic_rows = tushare_rows("daily_basic", {"trade_date": trade_date},
+                              "ts_code,pe_ttm,pb,total_mv")
+    basic_map: Dict[str, Dict] = {r["ts_code"]: r for r in basic_rows}
+
+    # 股票基本信息：名称、行业
+    info_rows = tushare_rows("stock_basic", {"list_status": "L"},
+                             "ts_code,name,industry")
+    info_map: Dict[str, Dict] = {r["ts_code"]: r for r in info_rows}
+
+    stocks: List[Dict[str, Any]] = []
+    for ts_code, daily in daily_map.items():
+        code = ts_code.split(".")[0] if "." in ts_code else ts_code
+        info = info_map.get(ts_code, {})
+        basic = basic_map.get(ts_code, {})
+
+        vol = _safe_float(daily.get("vol"))          # 手
+        amount = _safe_float(daily.get("amount"))     # 千元
+        total_mv = _safe_float(basic.get("total_mv")) # 万元
+        industry = info.get("industry") or "A股"
+
+        stocks.append({
+            "symbol": code,
+            "name": info.get("name", ""),
+            "price": _safe_float(daily.get("close")),
+            "pctChange": _safe_float(daily.get("pct_chg")),
+            "volume": f"{(vol / 10000):.1f}万" if vol else "0",
+            "turnover": f"{(amount / 100000):.2f}亿" if amount else "0",
+            "industry": industry,
+            "concepts": [industry],
+            "pe": _safe_float(basic.get("pe_ttm")),
+            "pb": _safe_float(basic.get("pb")),
+            "marketCap": round(total_mv / 10000) if total_mv else 0,
+        })
+
+    return stocks
 
 
-def map_stock_from_item(
-    item: Dict[str, Any],
-    default_industry: str = "A股",
-    default_concepts: List[str] | None = None,
-) -> Dict[str, Any]:
-    concepts = default_concepts or [
-        item.get("f100") if item.get("f100") not in (None, "-") else default_industry
-    ]
-    volume = item.get("f5")
-    turnover = item.get("f6")
-    market_cap = item.get("f20")
-    return {
-        "symbol": str(item.get("f12", "")),
-        "name": item.get("f14", ""),
-        "price": 0 if item.get("f2") == "-" else float(item.get("f2") or 0),
-        "pctChange": 0 if item.get("f3") == "-" else float(item.get("f3") or 0),
-        "volume": "0" if volume == "-" else f"{(float(volume or 0) / 10000):.1f}万",
-        "turnover": "0" if turnover == "-" else f"{(float(turnover or 0) / 100000000):.2f}亿",
-        "industry": item.get("f100") if item.get("f100") not in (None, "-") else default_industry,
-        "concepts": concepts,
-        "pe": 0 if item.get("f9") == "-" else float(item.get("f9") or 0),
-        "pb": 0 if item.get("f23") == "-" else float(item.get("f23") or 0),
-        "marketCap": 0 if market_cap == "-" else round(float(market_cap or 0) / 100000000),
-    }
+def fetch_chinext_stocks(full_market: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """从全市场数据中筛选创业板股票（代码以 3 开头）。"""
+    chinext = []
+    for stock in full_market:
+        if str(stock.get("symbol", "")).startswith("3"):
+            chinext.append({
+                **stock,
+                "industry": stock.get("industry") or "创业板",
+                "concepts": stock.get("concepts") or ["成长", "热门"],
+            })
+    return chinext
 
 
-def fetch_paged_stocks(
-    *,
-    fs_query: str,
-    fields: str,
-    mapper,
-    max_pages: int = 30,
-) -> List[Dict[str, Any]]:
-    rows: List[Dict[str, Any]] = []
-    for page in range(1, max_pages + 1):
-        payload = fetch_with_fallbacks(build_stock_list_url(page, fs_query, fields))
-        diff = payload.get("data", {}).get("diff", [])
-        if not isinstance(diff, list) or not diff:
-            break
-        rows.extend(mapper(item) for item in diff)
-        total = int(payload.get("data", {}).get("total") or 0)
-        total_pages = (total + STOCK_LIST_PAGE_SIZE - 1) // STOCK_LIST_PAGE_SIZE if total > 0 else None
-        if (total_pages and page >= total_pages) or (not total_pages and len(diff) < STOCK_LIST_PAGE_SIZE):
-            break
-        time.sleep(0.08)
-    return rows
-
+# =========================================================================
+# 概念板块（替代 push2.eastmoney.com 概念板块接口，改用 tushare ths_index）
+# =========================================================================
 
 def fetch_concept_board_list() -> List[Dict[str, Any]]:
-    url = (
-        "https://push2.eastmoney.com/api/qt/clist/get"
-        "?pn=1&pz=500&po=1&np=1"
-        "&ut=bd1d9ddb04089700cf9c27f6f7426281"
-        "&fltt=2&invt=2&fid=f3"
-        f"&fs=m:90+t:2+f:!50&fields=f12,f14&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    diff = payload.get("data", {}).get("diff", [])
-    return diff if isinstance(diff, list) else []
+    """通过 tushare ths_index 获取同花顺概念板块列表。"""
+    rows = tushare_rows("ths_index", {"exchange": "A", "type": "N"},
+                        "ts_code,name")
+    return [{"code": r["ts_code"], "name": r.get("name", "")} for r in rows if r.get("ts_code")]
 
 
 def fetch_concept_board_members(board_code: str, board_name: str) -> List[str]:
-    symbols: List[str] = []
-    for page in range(1, 200):
-        url = (
-            "https://push2.eastmoney.com/api/qt/clist/get"
-            f"?pn={page}&pz={CONCEPT_BOARD_PAGE_SIZE}&po=1&np=1"
-            "&ut=bd1d9ddb04089700cf9c27f6f7426281"
-            "&fltt=2&invt=2&fid=f3"
-            f"&fs=b:{board_code}+f:!50&fields=f12&_={now_millis()}"
-        )
-        payload = fetch_with_fallbacks(url)
-        diff = payload.get("data", {}).get("diff", [])
-        if not isinstance(diff, list) or not diff:
-            break
-
-        batch = [str(item.get("f12", "")) for item in diff if item.get("f12")]
-        symbols.extend(batch)
-
-        total = int(payload.get("data", {}).get("total") or 0)
-        total_pages = (
-            (total + CONCEPT_BOARD_PAGE_SIZE - 1) // CONCEPT_BOARD_PAGE_SIZE
-            if total > 0
-            else None
-        )
-        if (total_pages and page >= total_pages) or len(diff) < CONCEPT_BOARD_PAGE_SIZE:
-            break
-
-        time.sleep(0.05)
-
-    deduped: List[str] = []
+    """通过 tushare ths_member 获取概念板块成员股票代码。"""
+    rows = tushare_rows("ths_member", {"ts_code": board_code}, "code")
+    symbols = []
     seen: set[str] = set()
-    for symbol in symbols:
-        if not symbol or symbol in seen:
-            continue
-        seen.add(symbol)
-        deduped.append(symbol)
-    print(f"[stocks-py] concept {board_name} -> {len(deduped)} symbols")
-    return deduped
+    for r in rows:
+        code = str(r.get("code", "")).strip()
+        if code and code not in seen:
+            seen.add(code)
+            symbols.append(code)
+    print(f"[stocks-py] concept {board_name} -> {len(symbols)} symbols")
+    return symbols
 
 
 def build_stock_concept_map() -> Dict[str, List[str]]:
-    print("[stocks-py] Fetching concept board membership from EastMoney...")
+    """获取概念板块映射。优先使用本地缓存（stock_concept_map.json），
+    仅在缓存不存在或设置 FORCE_CONCEPT_REFRESH=1 时才从 tushare 逐个拉取。
+    概念板块成员变化不频繁，通常每周更新一次即可。"""
+
+    # 尝试从本地缓存读取
+    if not FORCE_CONCEPT_REFRESH:
+        cached = read_json("stock_concept_map.json")
+        if isinstance(cached, dict) and len(cached) > 100:
+            print(f"[stocks-py] 使用本地概念板块缓存（{len(cached)} 只股票），跳过 tushare 拉取。"
+                  f"设置 FORCE_CONCEPT_REFRESH=1 可强制刷新。")
+            return cached
+
+    print("[stocks-py] 从 tushare 拉取概念板块成员（约 400+ 板块，需要几分钟）...")
     try:
         concept_boards = fetch_concept_board_list()
     except Exception as error:
         print(f"[stocks-py] Failed to fetch concept board list: {error}")
         return {}
-    concept_map: Dict[str, List[str]] = {}
 
+    concept_map: Dict[str, List[str]] = {}
     for index, board in enumerate(concept_boards, start=1):
-        board_code = str(board.get("f12", "")).strip()
-        board_name = str(board.get("f14", "")).strip()
+        board_code = str(board.get("code", "")).strip()
+        board_name = str(board.get("name", "")).strip()
         if not board_code or not board_name:
             continue
 
@@ -161,35 +178,22 @@ def enrich_stock_concepts(stocks: List[Dict[str, Any]], concept_map: Dict[str, L
     for stock in stocks:
         symbol = str(stock.get("symbol", "")).strip()
         concepts = concept_map.get(symbol) or stock.get("concepts") or [stock.get("industry") or "A股"]
-        enriched.append(
-            {
-                **stock,
-                "concepts": concepts,
-            }
-        )
+        enriched.append({**stock, "concepts": concepts})
     return enriched
 
 
 def main() -> int:
-    print("[stocks-py] Fetching stock snapshots...")
-    common_fields = "f12,f14,f2,f3,f5,f6,f9,f23,f20,f100"
+    print("[stocks-py] Fetching stock snapshots via tushare...")
     concept_map = build_stock_concept_map()
     if not concept_map:
         print("[stocks-py] Concept map unavailable, continuing with industry fallback concepts")
-    full_market = fetch_paged_stocks(
-        fs_query="m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23",
-        fields=common_fields,
-        mapper=lambda item: map_stock_from_item(item),
-        max_pages=30,
-    )
-    chinext = fetch_paged_stocks(
-        fs_query="m:0+t:80",
-        fields="f12,f14,f2,f3,f5,f6,f9,f23,f20",
-        mapper=lambda item: map_stock_from_item(item, "创业板", ["成长", "热门"]),
-        max_pages=2,
-    )
+
+    full_market = fetch_full_market_stocks()
+    chinext = fetch_chinext_stocks(full_market)
+
     full_market = enrich_stock_concepts(full_market, concept_map)
     chinext = enrich_stock_concepts(chinext, concept_map)
+
     save_json("stock_list_full.json", full_market)
     save_json("stock_list_chinext.json", chinext)
     save_json("stock_concept_map.json", concept_map)

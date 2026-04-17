@@ -1,0 +1,42 @@
+[
+  {
+    "date": "04-07",
+    "amount": 10,
+    "changeRate": null
+  },
+  {
+    "date": "04-08",
+    "amount": 14,
+    "changeRate": 37.36
+  },
+  {
+    "date": "04-09",
+    "amount": 12,
+    "changeRate": -14.24
+  },
+  {
+    "date": "04-10",
+    "amount": 12,
+    "changeRate": 1.72
+  },
+  {
+    "date": "04-13",
+    "amount": 12,
+    "changeRate": -3.71
+  },
+  {
+    "date": "04-14",
+    "amount": 13,
+    "changeRate": 7.19
+  },
+  {
+    "date": "04-15",
+    "amount": 13,
+    "changeRate": 1.07
+  },
+  {
+    "date": "04-16",
+    "amount": 12,
+    "changeRate": -2.73
+  }
+]

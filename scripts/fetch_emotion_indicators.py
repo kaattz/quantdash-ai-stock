@@ -6,14 +6,18 @@ import time
 from pathlib import Path
 from typing import Dict, List
 
-from data_fetch_utils import DATA_DIR, fetch_with_fallbacks, now_millis, save_json
+from data_fetch_utils import (
+    DATA_DIR, save_json,
+    tushare_index_kline, tushare_global_index_kline, tushare_fx_kline,
+    tushare_full_market, tushare_rows, _fmt_date,
+)
 
 INDEX_CONFIG = {
-    "ftseA50": "100.XIN9",
-    "nasdaq": "100.NDX",
-    "dowJones": "100.DJIA",
-    "sp500": "100.SPX",
-    "offshoreRmb": "133.USDCNH",
+    "ftseA50": ("index_global", "XIN9"),
+    "nasdaq": ("index_global", "IXIC"),
+    "dowJones": ("index_global", "DJI"),
+    "sp500": ("index_global", "SPX"),
+    "offshoreRmb": ("fx", "USDCNH.FXCM"),
 }
 INDEX_FUTURES_CONFIG = {
     "IF": {"label": "沪深300", "inner_code": "1000208870"},
@@ -51,66 +55,37 @@ def trimmed_mean(values: List[float], trim_ratio: float = 0.1) -> float:
     return sum(trimmed) / len(trimmed)
 
 
-def fetch_index_series(secid: str, limit: int = 12) -> Dict[str, float]:
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
-        f"?secid={secid}"
-        "&ut=fa5fd1943c7b386f172d6893dbfba10b"
-        "&fields1=f1,f2,f3,f4,f5,f6"
-        "&fields2=f51,f52,f53,f54,f55,f56,f57,f58"
-        f"&klt=101&fqt=0&end=20500101&lmt={limit}&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    klines = payload.get("data", {}).get("klines", [])
-    if not isinstance(klines, list):
-        raise RuntimeError(f"No kline data for {secid}")
+def fetch_index_series(api_type: str, ts_code: str, limit: int = 12) -> Dict[str, float]:
+    try:
+        if api_type == "index_global":
+            rows = tushare_global_index_kline(ts_code, limit)
+        elif api_type == "fx":
+            rows = tushare_fx_kline(ts_code, limit)
+        else:
+            rows = tushare_index_kline(ts_code, limit)
+    except Exception as exc:
+        print(f"[emotion] fetch_index_series({ts_code}) failed: {exc}", file=sys.stderr)
+        return {}
 
     result: Dict[str, float] = {}
-    for item in klines:
-        parts = str(item).split(",")
-        if len(parts) < 3:
-            continue
-        date, _, close = parts[:3]
-        try:
-            close_value = float(close)
-        except ValueError:
-            continue
-        if close_value > 0:
-            result[date] = close_value
+    for r in rows:
+        date_str = _fmt_date(r.get("trade_date", ""))
+        close = float(r.get("close", 0) or 0)
+        if close > 0:
+            result[date_str] = close
     return result
 
 
 def fetch_ashare_average_pe() -> float:
     values: List[float] = []
-    for page_number in range(1, ASHARE_PE_MAX_PAGES + 1):
-        url = (
-            "https://push2.eastmoney.com/api/qt/clist/get"
-            f"?pn={page_number}&pz={ASHARE_PE_PAGE_SIZE}&po=1&np=1"
-            "&ut=bd1d9ddb04089700cf9c27f6f7426281"
-            "&fltt=2&invt=2&fid=f3"
-            "&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23"
-            f"&fields=f9&_={now_millis()}"
-        )
-        payload = fetch_with_fallbacks(url)
-        rows = payload.get("data", {}).get("diff", [])
-        if not isinstance(rows, list):
-            raise RuntimeError("No A-share PE data")
-
-        page_values = 0
-        for row in rows:
-            try:
-                pe = float(row.get("f9"))
-            except (TypeError, ValueError):
-                continue
-            if 0 < pe < 5000:
-                values.append(pe)
-                page_values += 1
-
-        if len(rows) < ASHARE_PE_PAGE_SIZE:
-            break
-        if page_values == 0 and page_number >= 2:
-            break
-        pause_briefly()
+    market_data = tushare_full_market()
+    for item in market_data:
+        try:
+            pe = float(item.get("pe_ttm", 0))
+        except (TypeError, ValueError):
+            continue
+        if 0 < pe < 5000:
+            values.append(pe)
 
     if not values:
         raise RuntimeError("No valid A-share PE values")
@@ -145,68 +120,87 @@ def normalize_ashare_average_pe(value: float, previous: object) -> float:
     return round(value, 2)
 
 
+_MAIN_CONTRACT_CACHE: Dict[str, str] = {}
+
+
 def fetch_index_futures_main_contract(code: str) -> str:
-    url = (
-        "https://datacenter-web.eastmoney.com/api/data/v1/get"
-        "?reportName=RPT_FUTU_POSITIONCODE"
-        "&columns=TRADE_CODE,SECURITY_CODE,IS_MAINCODE"
-        f'&filter=(TRADE_CODE%3D%22{code}%22)(IS_MAINCODE%3D%221%22)'
-        "&pageNumber=1&pageSize=10"
-        "&sortColumns=SECURITY_CODE&sortTypes=-1"
-        "&source=WEB&client=WEB"
-        f"&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    rows = payload.get("result", {}).get("data", [])
-    if not isinstance(rows, list):
-        raise RuntimeError("No IF main contract data")
+    """通过 tushare fut_basic 获取主力合约代码。"""
+    if code in _MAIN_CONTRACT_CACHE:
+        return _MAIN_CONTRACT_CACHE[code]
 
-    for row in rows:
-        if row.get("IS_MAINCODE") == "1" and isinstance(row.get("SECURITY_CODE"), str):
-            return row["SECURITY_CODE"]
+    # tushare fut_mapping 获取主力合约映射
+    rows = tushare_rows("fut_mapping", {"ts_code": f"{code}.CFX"}, "ts_code,mapping_ts_code")
+    if rows:
+        main_code = rows[0].get("mapping_ts_code", "")
+        if main_code:
+            _MAIN_CONTRACT_CACHE[code] = main_code
+            return main_code
 
-    raise RuntimeError(f"No {code} main contract found")
+    # fallback: 手动构造当月合约代码
+    from datetime import datetime
+    now = datetime.now()
+    month_code = now.strftime("%y%m")
+    main_code = f"{code}{month_code}.CFX"
+    _MAIN_CONTRACT_CACHE[code] = main_code
+    return main_code
 
 
 def fetch_single_index_futures_long_short_series(code: str, limit: int = 21) -> dict:
+    """通过 tushare fut_holding 获取期货多空持仓数据。"""
     config = INDEX_FUTURES_CONFIG[code]
-    main_contract = fetch_index_futures_main_contract(code)
-    url = (
-        "https://datacenter-web.eastmoney.com/api/data/v1/get"
-        "?reportName=RPT_FUTU_NET_POSITION"
-        "&columns=TRADE_DATE,TOTAL_LONG_POSITION,TOTAL_SHORT_POSITION"
-        f'&filter=(SECURITY_CODE%3D%22{main_contract}%22)(TYSECURITY_INNER_CODE%3D%22{config["inner_code"]}%22)'
-        f"&pageNumber=1&pageSize={limit}"
-        "&sortColumns=TRADE_DATE&sortTypes=-1"
-        "&source=WEB&client=WEB"
-        f"&_={now_millis()}"
+
+    from data_fetch_utils import _date_n_days_ago, _today_str
+    start_date = _date_n_days_ago(limit * 2)
+    end_date = _today_str()
+
+    # fut_holding 按品种代码查询，汇总所有会员的多空持仓
+    rows = tushare_rows(
+        "fut_holding",
+        {"symbol": code, "start_date": start_date, "end_date": end_date},
+        "trade_date,long_hld,short_hld,broker",
     )
-    payload = fetch_with_fallbacks(url)
-    rows = payload.get("result", {}).get("data", [])
-    if not isinstance(rows, list):
-        raise RuntimeError(f"No {code} long-short data")
+
+    if not rows:
+        # fallback: 尝试用交易所参数
+        rows = tushare_rows(
+            "fut_holding",
+            {"exchange": "CFFEX", "start_date": start_date, "end_date": end_date},
+            "trade_date,symbol,long_hld,short_hld,broker",
+        )
+        rows = [r for r in rows if r.get("symbol", "").startswith(code)]
+
+    # 按日期汇总多空持仓
+    daily_totals: Dict[str, Dict[str, int]] = {}
+    for r in rows:
+        trade_date = _fmt_date(r.get("trade_date", ""))
+        if not trade_date:
+            continue
+        if trade_date not in daily_totals:
+            daily_totals[trade_date] = {"long": 0, "short": 0}
+        daily_totals[trade_date]["long"] += int(r.get("long_hld") or 0)
+        daily_totals[trade_date]["short"] += int(r.get("short_hld") or 0)
 
     history: List[dict] = []
-    for row in rows:
-        trade_date = str(row.get("TRADE_DATE", ""))[:10]
-        try:
-            long_position = float(row.get("TOTAL_LONG_POSITION"))
-            short_position = float(row.get("TOTAL_SHORT_POSITION"))
-        except (TypeError, ValueError):
-            continue
-        if trade_date and short_position > 0:
-            history.append(
-                {
-                    "date": trade_date,
-                    "longPosition": int(round(long_position)),
-                    "shortPosition": int(round(short_position)),
-                }
-            )
+    for date_str in sorted(daily_totals.keys()):
+        totals = daily_totals[date_str]
+        if totals["short"] > 0:
+            history.append({
+                "date": date_str,
+                "longPosition": totals["long"],
+                "shortPosition": totals["short"],
+            })
 
-    history = sorted(history, key=lambda item: item["date"])[-12:]
+    history = history[-12:]
     if not history:
-        raise RuntimeError(f"No valid {code} long-short values")
+        print(f"[emotion] 警告: {code} 无期货持仓数据，返回空序列")
+        return {
+            "code": code,
+            "label": config["label"],
+            "mainContract": f"{code}(unknown)",
+            "history": [],
+        }
 
+    main_contract = fetch_index_futures_main_contract(code)
     return {
         "code": code,
         "label": config["label"],
@@ -256,64 +250,35 @@ def load_market_volume_lookup() -> Dict[str, dict]:
 
 
 def fetch_full_market_rows() -> List[dict]:
+    market_data = tushare_full_market()
+    if not market_data:
+        raise RuntimeError("No full-market rows returned from tushare")
+    # 转换为东方财富兼容的 f3/f6/f12/f14 格式
     rows: List[dict] = []
-    for page_number in range(1, FULL_MARKET_MAX_PAGES + 1):
-        url = (
-            "https://push2.eastmoney.com/api/qt/clist/get"
-            f"?pn={page_number}&pz={FULL_MARKET_PAGE_SIZE}&po=1&np=1"
-            "&ut=bd1d9ddb04089700cf9c27f6f7426281"
-            "&fltt=2&invt=2&fid=f12"
-            "&fs=m:0+t:6,m:0+t:80,m:1+t:2,m:1+t:23,m:0+t:81+s:2048"
-            f"&fields=f3,f6,f12,f14&_={now_millis()}"
-        )
-        try:
-            payload = fetch_with_fallbacks(url)
-        except Exception as exc:
-            if rows:
-                print(
-                    f"[emotion] full-market page {page_number} failed, keep partial rows: {exc}",
-                    file=sys.stderr,
-                )
-                break
-            raise
-
-        page_rows = payload.get("data", {}).get("diff", [])
-        if not isinstance(page_rows, list) or not page_rows:
-            break
-        rows.extend(item for item in page_rows if isinstance(item, dict))
-        if len(page_rows) < FULL_MARKET_PAGE_SIZE:
-            break
-        pause_briefly()
-    if not rows:
-        raise RuntimeError("No full-market rows returned for bull bear snapshot")
+    for item in market_data:
+        rows.append({
+            "f3": item.get("pct_chg", 0),
+            "f6": item.get("amount", 0),
+            "f12": item.get("code", ""),
+            "f14": item.get("name", ""),
+        })
     return rows
 
 
 def fetch_limit_pool_meta(date: str, pool_type: str) -> List[dict]:
+    """通过 tushare limit_list_d 获取涨停/跌停池元数据。"""
     api_date = date.replace("-", "")
-    url = (
-        "https://push2ex.eastmoney.com/getTopicZTPool"
-        "?ut=7eea3edcaed734bea9cbfc24409ed989"
-        "&dpt=wz.ztzt&Pageindex=0&pagesize=1000&sort=fbt%3Aasc"
-        f"&date={api_date}&_={now_millis()}"
-    ) if pool_type == "zt" else (
-        "https://push2ex.eastmoney.com/getTopicDTPool"
-        "?ut=7eea3edcaed734bea9cbfc24409ed989"
-        "&Pageindex=0&pagesize=1000&sort=fbt%3Aasc"
-        f"&date={api_date}&_={now_millis()}"
-    )
+    if pool_type == "zt":
+        from data_fetch_utils import tushare_limit_up_pool
+        pool = tushare_limit_up_pool(api_date)
+    else:
+        from data_fetch_utils import tushare_limit_down_pool
+        pool = tushare_limit_down_pool(api_date)
 
-    payload = fetch_with_fallbacks(url)
-    data = payload.get("data")
-    if not isinstance(data, dict):
-        return []
-    pool = data.get("pool")
-    if not isinstance(pool, list):
-        return []
     return [
         {
-            "symbol": str(item.get("c") or ""),
-            "name": str(item.get("n") or ""),
+            "symbol": item.get("symbol", ""),
+            "name": item.get("name", ""),
         }
         for item in pool
         if isinstance(item, dict)
@@ -338,7 +303,8 @@ def normalize_snapshot_date(date: str) -> str:
     if len(date) == 10 and date.count("-") == 2:
         return date
     if len(date) == 5 and date.count("-") == 1:
-        return f"2026-{date}"
+        from datetime import datetime
+        return f"{datetime.now().year}-{date}"
     return date
 
 
@@ -469,15 +435,17 @@ def load_existing_rows() -> Dict[str, dict]:
 
 def build_rows() -> List[dict]:
     existing = load_existing_rows()
-    series_map = {name: fetch_index_series(secid) for name, secid in INDEX_CONFIG.items()}
+    series_map = {name: fetch_index_series(api_type, ts_code) for name, (api_type, ts_code) in INDEX_CONFIG.items()}
     index_futures_long_short_series = fetch_index_futures_long_short_ratio_series()
 
-    shared_dates = sorted(
-        set.intersection(
-            *(set(series.keys()) for series in series_map.values()),
-            set(index_futures_long_short_series.keys()),
-        )
-    )[-10:]
+    # 只用有数据的指数来计算共享日期
+    available_series = {k: v for k, v in series_map.items() if v}
+    if not available_series:
+        raise RuntimeError("No index data available for emotion indicators")
+
+    date_sets = [set(s.keys()) for s in available_series.values()]
+    date_sets.append(set(index_futures_long_short_series.keys()))
+    shared_dates = sorted(set.intersection(*date_sets))[-10:]
 
     rows: List[dict] = []
     latest_shared_date = shared_dates[-1] if shared_dates else None
@@ -496,11 +464,11 @@ def build_rows() -> List[dict]:
         rows.append(
             {
                 "date": date,
-                "ftseA50": round(series_map["ftseA50"][date], 2),
-                "nasdaq": round(series_map["nasdaq"][date], 2),
-                "dowJones": round(series_map["dowJones"][date], 2),
-                "sp500": round(series_map["sp500"][date], 2),
-                "offshoreRmb": round(series_map["offshoreRmb"][date], 4),
+                "ftseA50": round(series_map["ftseA50"].get(date, 0), 2),
+                "nasdaq": round(series_map["nasdaq"].get(date, 0), 2),
+                "dowJones": round(series_map["dowJones"].get(date, 0), 2),
+                "sp500": round(series_map["sp500"].get(date, 0), 2),
+                "offshoreRmb": round(series_map["offshoreRmb"].get(date, 0), 4),
                 "ashareAvgValuation": round(float(valuation), 2),
                 "indexFuturesLongShortRatio": round(index_futures_long_short_series[date], 4),
             }
@@ -513,15 +481,38 @@ def build_rows() -> List[dict]:
 
 
 def main() -> int:
-    rows = build_rows()
-    futures_rows = build_index_futures_rows()
-    bull_bear_snapshot = build_bull_bear_signal_snapshot()
-    save_json("emotion_indicators.json", rows)
-    save_json("index_futures_long_short.json", futures_rows)
-    save_bull_bear_signal_snapshot(bull_bear_snapshot)
-    print(f"[emotion] wrote {len(rows)} rows to {OUTPUT_PATH}")
-    print(f"[emotion] wrote {len(futures_rows)} rows to {INDEX_FUTURES_OUTPUT_PATH}")
-    print(f"[emotion] updated bull bear snapshot for {bull_bear_snapshot.get('date')} at {BULL_BEAR_OUTPUT_PATH}")
+    wrote_any = False
+
+    # 情绪指标（国际指数 + PE + 期货多空比）
+    try:
+        rows = build_rows()
+        save_json("emotion_indicators.json", rows)
+        print(f"[emotion] wrote {len(rows)} rows to {OUTPUT_PATH}")
+        wrote_any = True
+    except Exception as exc:
+        print(f"[emotion] build_rows failed, skipping: {exc}", file=sys.stderr)
+
+    # 期货多空比
+    try:
+        futures_rows = build_index_futures_rows()
+        save_json("index_futures_long_short.json", futures_rows)
+        print(f"[emotion] wrote {len(futures_rows)} rows to {INDEX_FUTURES_OUTPUT_PATH}")
+        wrote_any = True
+    except Exception as exc:
+        print(f"[emotion] build_index_futures_rows failed, skipping: {exc}", file=sys.stderr)
+
+    # 牛熊信号快照（依赖 push2 全市场数据）
+    try:
+        bull_bear_snapshot = build_bull_bear_signal_snapshot()
+        save_bull_bear_signal_snapshot(bull_bear_snapshot)
+        print(f"[emotion] updated bull bear snapshot for {bull_bear_snapshot.get('date')} at {BULL_BEAR_OUTPUT_PATH}")
+        wrote_any = True
+    except Exception as exc:
+        print(f"[emotion] build_bull_bear_signal_snapshot failed, skipping: {exc}", file=sys.stderr)
+
+    if not wrote_any:
+        print("[emotion] all sections failed", file=sys.stderr)
+        return 1
     return 0
 
 

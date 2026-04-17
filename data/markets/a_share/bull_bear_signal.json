@@ -50,13 +50,13 @@
   },
   {
     "date": "2026-03-30",
-    "riseCount": 100,
-    "fallCount": 280,
-    "flatCount": 7,
+    "riseCount": 4293,
+    "fallCount": 1072,
+    "flatCount": 133,
     "limitUpCount": 62,
-    "limitDownCount": 0,
+    "limitDownCount": 10,
     "naturalLimitUpCount": 62,
-    "naturalLimitDownCount": 0,
+    "naturalLimitDownCount": 10,
     "totalAmount": 18959,
     "amountChangeRate": 2.3,
     "rangeBuckets": [
@@ -67,32 +67,32 @@
       },
       {
         "label": "涨停~5%",
-        "count": 11,
+        "count": 352,
         "tone": "up"
       },
       {
         "label": "5~1%",
-        "count": 40,
+        "count": 2452,
         "tone": "up"
       },
       {
         "label": "平盘",
-        "count": 184,
+        "count": 2262,
         "tone": "flat"
       },
       {
         "label": "0~-1%",
-        "count": 147,
+        "count": 332,
         "tone": "down"
       },
       {
         "label": "-1~-5%",
-        "count": 4,
+        "count": 28,
         "tone": "down"
       },
       {
         "label": "跌停",
-        "count": 0,
+        "count": 10,
         "tone": "down"
       }
     ]

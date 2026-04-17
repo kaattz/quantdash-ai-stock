@@ -1,41 +1,5 @@
 [
   {
-    "date": "03-23",
-    "fullDate": "2026-03-23",
-    "limitUpCount": 28,
-    "followThroughCount": 6,
-    "brokenCount": 22,
-    "successRate": 0.21428571428571427,
-    "avgBoardGain": 0.21428571428571427
-  },
-  {
-    "date": "03-24",
-    "fullDate": "2026-03-24",
-    "limitUpCount": 83,
-    "followThroughCount": 23,
-    "brokenCount": 60,
-    "successRate": 0.27710843373493976,
-    "avgBoardGain": 0.27710843373493976
-  },
-  {
-    "date": "03-25",
-    "fullDate": "2026-03-25",
-    "limitUpCount": 84,
-    "followThroughCount": 10,
-    "brokenCount": 74,
-    "successRate": 0.11904761904761904,
-    "avgBoardGain": 0.11904761904761904
-  },
-  {
-    "date": "03-26",
-    "fullDate": "2026-03-26",
-    "limitUpCount": 39,
-    "followThroughCount": 10,
-    "brokenCount": 29,
-    "successRate": 0.2564102564102564,
-    "avgBoardGain": 0.2564102564102564
-  },
-  {
     "date": "03-27",
     "fullDate": "2026-03-27",
     "limitUpCount": 78,
@@ -129,8 +93,44 @@
     "date": "04-10",
     "fullDate": "2026-04-10",
     "limitUpCount": 59,
+    "followThroughCount": 8,
+    "brokenCount": 51,
+    "successRate": 0.13559322033898305,
+    "avgBoardGain": 0.13559322033898305
+  },
+  {
+    "date": "04-13",
+    "fullDate": "2026-04-13",
+    "limitUpCount": 59,
+    "followThroughCount": 10,
+    "brokenCount": 49,
+    "successRate": 0.1694915254237288,
+    "avgBoardGain": 0.1694915254237288
+  },
+  {
+    "date": "04-14",
+    "fullDate": "2026-04-14",
+    "limitUpCount": 55,
+    "followThroughCount": 11,
+    "brokenCount": 44,
+    "successRate": 0.2,
+    "avgBoardGain": 0.2
+  },
+  {
+    "date": "04-15",
+    "fullDate": "2026-04-15",
+    "limitUpCount": 57,
+    "followThroughCount": 8,
+    "brokenCount": 49,
+    "successRate": 0.14035087719298245,
+    "avgBoardGain": 0.14035087719298245
+  },
+  {
+    "date": "04-16",
+    "fullDate": "2026-04-16",
+    "limitUpCount": 79,
     "followThroughCount": 0,
-    "brokenCount": 59,
+    "brokenCount": 79,
     "successRate": 0,
     "avgBoardGain": 0
   }

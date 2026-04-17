@@ -1,57 +1,57 @@
 {
   "boardType": "concept",
-  "currentLeaderName": "玻纤制造",
-  "currentLeaderCode": "BK1462",
-  "currentLeaderPctChange": 8.32,
-  "currentStreakDays": 2,
-  "currentTopThreeAppearances": 3,
-  "strongestRepeatName": "玻纤制造",
+  "currentLeaderName": "快递",
+  "currentLeaderCode": "BK1489",
+  "currentLeaderPctChange": 6.01,
+  "currentStreakDays": 1,
+  "currentTopThreeAppearances": 2,
+  "strongestRepeatName": "品牌消费电子",
   "strongestRepeatCount": 3,
   "entries": [
     {
-      "date": "04-07",
-      "leaderName": "肉制品",
-      "leaderCode": "BK1580",
-      "leaderPctChange": 3.89,
-      "streakDays": 1,
-      "topThreeAppearances": 1,
-      "strengthDelta": null
-    },
-    {
-      "date": "04-08",
-      "leaderName": "印制电路板",
-      "leaderCode": "BK1340",
-      "leaderPctChange": 7.37,
-      "streakDays": 1,
-      "topThreeAppearances": 1,
-      "strengthDelta": null
-    },
-    {
       "date": "04-09",
-      "leaderName": "油田服务",
-      "leaderCode": "BK1573",
-      "leaderPctChange": 1.31,
+      "leaderName": "彩电",
+      "leaderCode": "BK1453",
+      "leaderPctChange": 0.04,
       "streakDays": 1,
       "topThreeAppearances": 1,
       "strengthDelta": null
     },
     {
       "date": "04-10",
-      "leaderName": "玻纤制造",
-      "leaderCode": "BK1462",
-      "leaderPctChange": 4.69,
+      "leaderName": "品牌消费电子",
+      "leaderCode": "BK1337",
+      "leaderPctChange": 3.71,
       "streakDays": 1,
       "topThreeAppearances": 3,
       "strengthDelta": null
     },
     {
       "date": "04-13",
-      "leaderName": "玻纤制造",
-      "leaderCode": "BK1462",
-      "leaderPctChange": 8.32,
-      "streakDays": 2,
-      "topThreeAppearances": 3,
-      "strengthDelta": 3.63
+      "leaderName": "其他生物制品",
+      "leaderCode": "BK1596",
+      "leaderPctChange": 0.68,
+      "streakDays": 1,
+      "topThreeAppearances": 2,
+      "strengthDelta": null
+    },
+    {
+      "date": "04-14",
+      "leaderName": "国际工程",
+      "leaderCode": "BK1475",
+      "leaderPctChange": 5.67,
+      "streakDays": 1,
+      "topThreeAppearances": 1,
+      "strengthDelta": null
+    },
+    {
+      "date": "04-15",
+      "leaderName": "快递",
+      "leaderCode": "BK1489",
+      "leaderPctChange": 6.01,
+      "streakDays": 1,
+      "topThreeAppearances": 2,
+      "strengthDelta": null
     }
   ]
 }

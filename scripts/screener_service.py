@@ -7,7 +7,7 @@ import secrets
 import sqlite3
 import sys
 from contextlib import asynccontextmanager
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional, Tuple
 
@@ -695,13 +695,13 @@ async def _watch_sync_process(process: asyncio.subprocess.Process) -> None:
     try:
         await process.wait()
         SYNC_RUNTIME_STATE["state"] = "idle"
-        SYNC_RUNTIME_STATE["finishedAt"] = datetime.utcnow().isoformat()
+        SYNC_RUNTIME_STATE["finishedAt"] = datetime.now(timezone(timedelta(hours=8))).isoformat()
         SYNC_RUNTIME_STATE["exitCode"] = process.returncode
         SYNC_RUNTIME_STATE["error"] = None if process.returncode == 0 else f"process exited with code {process.returncode}"
         SYNC_RUNTIME_STATE["pid"] = None
     except Exception as exc:  # pragma: no cover
         SYNC_RUNTIME_STATE["state"] = "idle"
-        SYNC_RUNTIME_STATE["finishedAt"] = datetime.utcnow().isoformat()
+        SYNC_RUNTIME_STATE["finishedAt"] = datetime.now(timezone(timedelta(hours=8))).isoformat()
         SYNC_RUNTIME_STATE["exitCode"] = -1
         SYNC_RUNTIME_STATE["error"] = str(exc)
         SYNC_RUNTIME_STATE["pid"] = None
@@ -727,7 +727,7 @@ async def launch_startup_sync(mode: str = "startup") -> Dict[str, Any]:
     SYNC_RUNTIME_STATE["state"] = "running"
     SYNC_RUNTIME_STATE["trigger"] = "startup-sync"
     SYNC_RUNTIME_STATE["mode"] = mode
-    SYNC_RUNTIME_STATE["startedAt"] = datetime.utcnow().isoformat()
+    SYNC_RUNTIME_STATE["startedAt"] = datetime.now(timezone(timedelta(hours=8))).isoformat()
     SYNC_RUNTIME_STATE["finishedAt"] = None
     SYNC_RUNTIME_STATE["exitCode"] = None
     SYNC_RUNTIME_STATE["error"] = None

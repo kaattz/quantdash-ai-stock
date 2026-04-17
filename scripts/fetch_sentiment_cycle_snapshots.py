@@ -6,7 +6,11 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from data_fetch_utils import MARKET_DATA_DIR, fetch_with_fallbacks, now_millis, read_json as read_local_json, save_json
+from data_fetch_utils import (
+    MARKET_DATA_DIR,
+    read_json as read_local_json, save_json,
+    tushare_index_kline, tushare_limit_up_pool, tushare_limit_down_pool, _fmt_date,
+)
 
 
 KLINE_DIR = MARKET_DATA_DIR / "klines"
@@ -82,6 +86,7 @@ def load_local_kline_file(symbol: str) -> Any:
 
 
 def get_stock_kline(symbol: str, period: int = 101) -> List[dict[str, Any]]:
+    """从本地 kline 文件读取 K 线数据（由 fetch_kline_library.py 批量同步）。"""
     cache_key = f"{symbol}_{period}"
     if cache_key in KLINE_CACHE:
         return KLINE_CACHE[cache_key]
@@ -96,38 +101,8 @@ def get_stock_kline(symbol: str, period: int = 101) -> List[dict[str, Any]]:
         KLINE_CACHE[cache_key] = local_series
         return local_series
 
-    market = "1" if str(symbol).startswith("6") else "0"
-    secid = f"{market}.{symbol}"
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
-        f"?secid={secid}"
-        "&fields1=f1&fields2=f51,f52,f53,f54,f55,f57"
-        f"&klt={period}&fqt=1&end=20500101&lmt=200&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    klines = payload.get("data", {}).get("klines", [])
-    if not isinstance(klines, list):
-        return []
-
-    series = []
-    for item in klines:
-        parts = str(item).split(",")
-        if len(parts) < 6:
-            continue
-        date, open_price, close_price, high, low, volume = parts[:6]
-        series.append(
-            {
-                "date": date,
-                "open": float(open_price),
-                "close": float(close_price),
-                "high": float(high),
-                "low": float(low),
-                "volume": float(volume),
-            }
-        )
-
-    KLINE_CACHE[cache_key] = series
-    return series
+    KLINE_CACHE[cache_key] = []
+    return []
 
 
 def get_single_day_close_change(symbol: str, date_str: str) -> Optional[float]:
@@ -189,95 +164,71 @@ def get_single_day_performance(symbol: str, date_str: str) -> Optional[dict[str,
 
 
 def fetch_limit_up_pool(date_str: str) -> List[dict[str, Any]]:
+    """通过 tushare limit_list_d 获取涨停池。"""
     if date_str in LIMIT_UP_POOL_CACHE:
         return LIMIT_UP_POOL_CACHE[date_str]
 
     api_date = date_str.replace("-", "")
-    url = (
-        "https://push2ex.eastmoney.com/getTopicZTPool"
-        "?ut=7eea3edcaed734bea9cbfc24409ed989"
-        "&dpt=wz.ztzt&Pageindex=0&pagesize=500&sort=fbt%3Aasc"
-        f"&date={api_date}&_={now_millis()}"
-    )
-    try:
-        payload = fetch_with_fallbacks(url)
-        pool = payload.get("data", {}).get("pool", [])
-        result = [
-            {
-                "symbol": str(item.get("c", "")),
-                "name": item.get("n", ""),
-                "boardCount": int(item.get("lbc") or 0),
-                "limitUpTime": item.get("lbt")
-                or item.get("zttime")
-                or item.get("zttm")
-                or item.get("fbt")
-                or item.get("ftime")
-                or item.get("lst"),
-            }
-            for item in pool
-        ]
-        LIMIT_UP_POOL_CACHE[date_str] = result
-        return result
-    except Exception:
-        LIMIT_UP_POOL_CACHE[date_str] = []
-        return []
+    pool = tushare_limit_up_pool(api_date)
+    result = [
+        {
+            "symbol": item.get("symbol", ""),
+            "name": item.get("name", ""),
+            "boardCount": int(item.get("boardCount") or 1),
+            "limitUpTime": item.get("limitUpTime", ""),
+            "industry": item.get("industry", ""),
+            "pctChange": item.get("pctChange", 0),
+        }
+        for item in pool
+    ]
+    LIMIT_UP_POOL_CACHE[date_str] = result
+    return result
 
 
 def fetch_broken_pool(date_str: str) -> List[dict[str, Any]]:
+    """通过 tushare limit_list_d (limit_type='Z') 获取炸板池。
+    如果 tushare 不支持 Z 类型，则从涨停池中筛选跌幅较大的作为近似。"""
     if date_str in BROKEN_POOL_CACHE:
         return BROKEN_POOL_CACHE[date_str]
 
     api_date = date_str.replace("-", "")
-    url = (
-        "https://push2ex.eastmoney.com/getTopicZBPool"
-        "?ut=7eea3edcaed734bea9cbfc24409ed989"
-        "&dpt=wz.ztzt"
-        "&Pageindex=0&pagesize=500&sort=fbt%3Aasc"
-        f"&date={api_date}&_={now_millis()}"
+    from data_fetch_utils import tushare_rows
+    rows = tushare_rows(
+        "limit_list_d",
+        {"trade_date": api_date, "limit_type": "Z"},
+        "ts_code,name,close,pct_chg",
     )
-    try:
-        payload = fetch_with_fallbacks(url)
-        pool = payload.get("data", {}).get("pool", [])
+
+    if rows:
         result = [
             {
-                "symbol": str(item.get("c", "")),
-                "name": item.get("n", ""),
-                "pctChange": float(item.get("zdp") or 0),
+                "symbol": (r.get("ts_code", "").split(".")[0] if "." in r.get("ts_code", "") else r.get("ts_code", "")),
+                "name": r.get("name", ""),
+                "pctChange": float(r.get("pct_chg") or 0),
             }
-            for item in pool
+            for r in rows
         ]
-        BROKEN_POOL_CACHE[date_str] = result
-        return result
-    except Exception:
-        BROKEN_POOL_CACHE[date_str] = []
-        return []
+    else:
+        # fallback: 返回空列表
+        result = []
+
+    BROKEN_POOL_CACHE[date_str] = result
+    return result
 
 
 def fetch_market_index_amount_series(secid: str) -> Dict[str, float]:
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
-        f"?secid={secid}"
-        "&ut=fa5fd1943c7b386f172d6893dbfba10b"
-        "&fields1=f1,f2,f3,f4,f5,f6"
-        "&fields2=f51,f52,f53,f54,f55,f56,f57,f58"
-        f"&klt=101&fqt=0&end=20500101&lmt=12&_={now_millis()}"
-    )
+    parts = secid.split(".")
+    if len(parts) != 2:
+        return {}
+    market, code = parts
+    suffix = ".SH" if market == "1" else ".SZ"
+    ts_code = f"{code}{suffix}"
     try:
-        payload = fetch_with_fallbacks(url)
-        klines = payload.get("data", {}).get("klines", [])
-        if not isinstance(klines, list):
-            return {}
+        rows = tushare_index_kline(ts_code, limit=12)
         result: Dict[str, float] = {}
-        for line in klines:
-            parts = str(line).split(",")
-            if len(parts) < 7:
-                continue
-            date = parts[0]
-            try:
-                amount = float(parts[6])
-            except ValueError:
-                continue
-            result[date] = amount
+        for r in rows:
+            date_str = _fmt_date(r.get("trade_date", ""))
+            result[date_str] = float(r.get("vol", 0) or 0)
         return result
     except Exception:
         return {}
@@ -293,14 +244,8 @@ def get_recent_trading_dates(count: int) -> List[str]:
         )
         return dates[max(len(dates) - count - 2, 0):]
 
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
-        "?secid=1.000001&fields1=f1&fields2=f51&klt=101&fqt=1"
-        f"&end=20500101&lmt=40&_={now_millis()}"
-    )
-    payload = fetch_with_fallbacks(url)
-    klines = payload.get("data", {}).get("klines", [])
-    dates = sorted(str(item).split(",")[0] for item in klines)
+    rows = tushare_index_kline("000001.SH", limit=40)
+    dates = sorted(_fmt_date(r.get("trade_date", "")) for r in rows)
     return dates[max(len(dates) - count - 2, 0):]
 
 

@@ -78,3 +78,30 @@ export const getInfoGatheringNews = async (): Promise<NewsItem[]> => {
   const groups = await getInfoGatheringNewsGroups();
   return groups.merged;
 };
+
+/**
+ * 按股票名称或代码过滤新闻，并按标题匹配优先排序
+ * 标题匹配的条目排在仅内容匹配的条目之前
+ */
+export const filterNewsByStock = (
+  items: NewsItem[],
+  stockName: string,
+  stockSymbol: string,
+): NewsItem[] => {
+  const filtered = items.filter((item) => {
+    const titleMatch =
+      item.title.includes(stockName) || item.title.includes(stockSymbol);
+    const contentMatch =
+      item.content?.includes(stockName) || item.content?.includes(stockSymbol);
+    return titleMatch || contentMatch;
+  });
+
+  return filtered.sort((a, b) => {
+    const aInTitle =
+      a.title.includes(stockName) || a.title.includes(stockSymbol);
+    const bInTitle =
+      b.title.includes(stockName) || b.title.includes(stockSymbol);
+    if (aInTitle === bInTitle) return 0;
+    return aInTitle ? -1 : 1;
+  });
+};
