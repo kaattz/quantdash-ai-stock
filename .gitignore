@@ -60,3 +60,6 @@ temp_mstats.html
 *.njsproj
 *.sln
 *.sw?
+
+# Kiro IDE config
+.kiro/
