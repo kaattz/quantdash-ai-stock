@@ -170,6 +170,31 @@ class EastmoneyProviderPolicyPayload(StrictModel):
     datasetOverrides: Dict[str, EastmoneyProviderPolicyMode] = Field(default_factory=dict)
 
 
+class SkillLibraryEntry(StrictModel):
+    id: str
+    name: str
+    description: str = ""
+    instructions: str
+    scopes: List[
+        Literal[
+            "reportSummary",
+            "dailyReview",
+            "ultraShortAnalysis",
+            "premarketPlan",
+            "stockObservation",
+            "planValidation",
+        ]
+    ] = Field(default_factory=list)
+    fileName: str
+    sourceTitle: str
+    updatedAt: str
+    readOnly: bool = True
+
+
+class SkillLibraryResponse(StrictModel):
+    entries: List[SkillLibraryEntry] = Field(default_factory=list)
+
+
 try:
     WatchlistEntry.model_rebuild()
 except AttributeError:

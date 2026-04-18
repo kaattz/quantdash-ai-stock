@@ -15,6 +15,7 @@ from server.modules.github_updates import (
 )
 from server.modules.integrations import ROUTER as INTEGRATIONS_ROUTER
 from server.modules.screener import ROUTER as SCREENER_ROUTER
+from server.modules.skill_library import ROUTER as SKILL_LIBRARY_ROUTER
 from server.modules.sync_runtime import ROUTER as SYNC_ROUTER
 from server.modules.watchlist import ROUTER as WATCHLIST_ROUTER
 from server.shared.api import RequestContextMiddleware, register_exception_handlers
@@ -43,6 +44,7 @@ APP.add_middleware(RequestContextMiddleware)
 register_exception_handlers(APP)
 APP.include_router(SYNC_ROUTER)
 APP.include_router(INTEGRATIONS_ROUTER)
+APP.include_router(SKILL_LIBRARY_ROUTER)
 APP.include_router(EASTMONEY_ROUTER)
 APP.include_router(GITHUB_UPDATES_ROUTER)
 APP.include_router(AUTH_ROUTER)

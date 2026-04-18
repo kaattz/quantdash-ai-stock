@@ -5,6 +5,7 @@ import { LayoutDashboard, Sliders, Radio, Activity, TrendingUp, Layers, Bot, Git
 import SyncStatusCard from './components/SyncStatusCard';
 import DataSourcePolicyCard from './components/DataSourcePolicyCard';
 import { warmGithubUpdateCheck } from './services/githubUpdatesService';
+import { syncSkillLibraryIntoSettings } from './services/skillLibraryService';
 import { fetchSyncRuntimeStatus, loadSyncStatus } from './services/syncStatusService';
 import { SyncRuntimeStatus, SyncStatusPayload } from './types';
 import { AIStockObservationRequest, subscribeAIStockObservationRequest } from './services/aiNavigationService';
@@ -116,6 +117,7 @@ function App() {
 
   useEffect(() => {
     void warmGithubUpdateCheck();
+    void syncSkillLibraryIntoSettings();
   }, []);
 
   const toggleTheme = () => setIsDark(!isDark);

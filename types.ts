@@ -185,6 +185,22 @@ export interface AISkillDefinition {
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
+  source?: 'custom' | 'library';
+  readOnly?: boolean;
+  libraryFileName?: string;
+  sourceTitle?: string;
+}
+
+export interface SkillLibraryEntry {
+  id: string;
+  name: string;
+  description: string;
+  instructions: string;
+  scopes: AISkillScope[];
+  fileName: string;
+  sourceTitle: string;
+  updatedAt: string;
+  readOnly: true;
 }
 
 export interface ModelProviderConfig {

@@ -25,8 +25,8 @@ const getPrimaryActionButtonClass = (isScanning: boolean, isPywencaiMode: boolea
     isScanning
       ? 'cursor-not-allowed bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400'
       : isPywencaiMode
-        ? 'bg-[#da7756] text-white hover:bg-[#c86747] shadow-[0_10px_30px_rgba(218,119,86,0.18)]'
-        : 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 shadow-cyan-900/20'
+        ? 'border border-cyan-400/30 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_12px_28px_rgba(8,145,178,0.22)] hover:from-cyan-500 hover:to-blue-500 hover:shadow-[0_16px_34px_rgba(8,145,178,0.28)]'
+        : 'border border-cyan-400/30 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_12px_28px_rgba(8,145,178,0.22)] hover:from-cyan-500 hover:to-blue-500 hover:shadow-[0_16px_34px_rgba(8,145,178,0.28)]'
   }`;
 
 const ScreenerStrategyPanel: React.FC<ScreenerStrategyPanelProps> = ({

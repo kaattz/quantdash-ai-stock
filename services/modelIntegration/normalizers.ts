@@ -86,7 +86,11 @@ export const normalizeSkill = (skill: Partial<AISkillDefinition>): AISkillDefini
     scopes: normalizeSkillScopes(skill.scopes),
     enabled: Boolean(skill.enabled),
     createdAt: skill.createdAt ?? now,
-    updatedAt: now,
+    updatedAt: skill.updatedAt ?? now,
+    source: skill.source === 'library' ? 'library' : 'custom',
+    readOnly: Boolean(skill.readOnly),
+    libraryFileName: skill.libraryFileName?.trim() || '',
+    sourceTitle: skill.sourceTitle?.trim() || '',
   };
 };
 
