@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
     return {
       publicDir: path.resolve(__dirname, 'data'),
       server: {
-        port: 3000,
+        port: 3500,
         host: '0.0.0.0',
       },
       plugins: [react()],
