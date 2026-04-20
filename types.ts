@@ -92,6 +92,9 @@ export interface AISkillDefinition {
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
+  readOnly?: boolean;
+  fileName?: string;
+  sourceTitle?: string;
 }
 
 export interface ModelProviderConfig {

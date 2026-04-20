@@ -4,7 +4,7 @@
 # - The offline collector scripts under `scripts/fetch_*.py` currently use only
 #   the Python standard library.
 # - The packages below are required for the FastAPI-based screener service
-#   (`scripts/screener_service.py`) and related local testing.
+#   (`scripts/server/app.py`) and related local testing.
 # - Intraday news collectors under `dingding盘中资讯2/` need additional packages
 #   for external feeds and translation.
 

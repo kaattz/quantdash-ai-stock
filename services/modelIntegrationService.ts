@@ -595,11 +595,14 @@ export const getDefaultPromptTemplates = (): AIPromptTemplates => DEFAULT_PROMPT
 
 export const getEnabledSkillsForScope = (
   settings: Pick<AIIntegrationSettings, 'skills'>,
-  scope: AISkillScope
-): AISkillDefinition[] =>
-  (settings.skills ?? [])
+  scope: AISkillScope,
+  librarySkills?: AISkillDefinition[]
+): AISkillDefinition[] => {
+  const allSkills = [...(settings.skills ?? []), ...(librarySkills ?? [])];
+  return allSkills
     .filter((skill) => skill.enabled && skill.instructions.trim() && skill.scopes.includes(scope))
     .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt));
+};
 
 export const renderSkillInstructions = (skills: AISkillDefinition[]): string => {
   if (!skills.length) return '';

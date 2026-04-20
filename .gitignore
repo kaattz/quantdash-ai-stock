@@ -23,6 +23,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.hypothesis/
+.pytest_cache/
 
 # Local databases and auth/session state
 data/auth.db

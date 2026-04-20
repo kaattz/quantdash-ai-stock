@@ -5,7 +5,7 @@ import os
 # 添加当前目录到Python路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from screener_service import fetch_kline
+from server.modules.screener_kline_data import fetch_kline
 
 async def test_kline_fetch():
     """测试K线数据获取功能"""

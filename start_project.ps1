@@ -29,7 +29,7 @@ Write-Host "[INFO] Clearing existing frontend/backend ports..."
 & (Join-Path $PSScriptRoot "stop_project.bat")
 
 Write-Host "[INFO] Starting backend on http://127.0.0.1:7878 ..."
-Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", "if exist venv\Scripts\activate.bat call venv\Scripts\activate.bat && python scripts\screener_service.py"
+Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", "if exist venv\Scripts\activate.bat call venv\Scripts\activate.bat && python scripts\server\app.py"
 
 Write-Host "[INFO] Starting frontend dev server..."
 Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", "if exist venv\Scripts\activate.bat call venv\Scripts\activate.bat && npm run dev"

@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeft, CheckCircle2, Plus, Sparkles, Trash2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Library, Plus, Sparkles, Trash2 } from 'lucide-react';
 import GlassCard from './ui/GlassCard';
 import Badge from './ui/Badge';
 import { AIIntegrationSettings, AISkillDefinition, AISkillScope } from '../types';
 import { loadAIIntegrationSettings, saveAIIntegrationSettings } from '../services/modelIntegrationService';
+import { resolveScreenerApiBase } from '../services/apiConfig';
 
 const scopeMeta: { key: AISkillScope; label: string; hint: string; accent: string }[] = [
   { key: 'dailyReview', label: 'AI 当日复盘', hint: '盘后复盘时自动注入', accent: 'violet' },
@@ -59,9 +60,42 @@ const SkillsSection: React.FC = () => {
   const [selectedSkillId, setSelectedSkillId] = useState('');
   const [feedback, setFeedback] = useState('');
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [librarySkills, setLibrarySkills] = useState<AISkillDefinition[]>([]);
   const listPanelRef = useRef<HTMLDivElement | null>(null);
 
-  const skills = settings.skills;
+  // 从后端加载 library skills（游资skills 目录解析的只读条目）
+  useEffect(() => {
+    const fetchLibrary = async () => {
+      try {
+        const resp = await fetch(`${resolveScreenerApiBase()}/integrations/skills/library`);
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const entries: AISkillDefinition[] = (data.entries ?? []).map((entry: any) => ({
+          id: entry.id,
+          name: entry.name,
+          description: entry.description ?? '',
+          instructions: entry.instructions ?? '',
+          githubRepo: '',
+          githubNotes: '',
+          scopes: entry.scopes ?? [],
+          enabled: true,
+          createdAt: entry.updatedAt ?? new Date().toISOString(),
+          updatedAt: entry.updatedAt ?? new Date().toISOString(),
+          readOnly: true,
+          fileName: entry.fileName,
+          sourceTitle: entry.sourceTitle,
+        }));
+        setLibrarySkills(entries);
+      } catch {
+        // 后端不可用时静默忽略
+      }
+    };
+    fetchLibrary();
+  }, []);
+
+  const userSkills = settings.skills;
+  // 合并用户自建 skills 和 library skills
+  const skills = useMemo(() => [...userSkills, ...librarySkills], [userSkills, librarySkills]);
   const selectedSkill = useMemo(
     () => skills.find((skill) => skill.id === selectedSkillId) ?? skills[0] ?? null,
     [selectedSkillId, skills]
@@ -210,9 +244,12 @@ const SkillsSection: React.FC = () => {
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <div className="truncate text-sm font-semibold">{skill.name}</div>
+                          <div className="truncate text-sm font-semibold">
+                            {skill.readOnly ? <Library size={13} className="mr-1.5 inline-block text-amber-500" /> : null}
+                            {skill.name}
+                          </div>
                           <div className={`mt-1 text-xs leading-6 ${isSelected ? 'text-cyan-700/80 dark:text-cyan-100/80' : 'text-slate-500 dark:text-gray-400'}`}>
-                            {skill.description || '未填写描述'}
+                            {skill.readOnly && skill.sourceTitle ? `来源：${skill.sourceTitle}` : skill.description || '未填写描述'}
                           </div>
                         </div>
                         <span className={`mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${skill.enabled ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-gray-600'}`} />
@@ -245,24 +282,33 @@ const SkillsSection: React.FC = () => {
                     <ArrowLeft size={15} />
                     返回列表
                   </button>
-                  <button
-                    onClick={() => updateSkill(selectedSkill.id, (current) => ({ ...current, enabled: !current.enabled }))}
-                    className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium ${
-                      selectedSkill.enabled
-                        ? 'border-emerald-300/60 text-emerald-700 hover:bg-emerald-100/80 dark:border-emerald-500/30 dark:text-emerald-200 dark:hover:bg-emerald-500/10'
-                        : 'border-slate-300/60 text-slate-700 hover:bg-slate-100/80 dark:border-white/15 dark:text-slate-200 dark:hover:bg-white/10'
-                    }`}
-                  >
-                    <CheckCircle2 size={15} />
-                    {selectedSkill.enabled ? '已启用' : '未启用'}
-                  </button>
-                  <button
-                    onClick={() => handleDeleteSkill(selectedSkill.id)}
-                    className="inline-flex items-center gap-2 rounded-lg border border-rose-300/60 px-3 py-2 text-sm font-medium text-rose-700 hover:bg-rose-100/80 dark:border-rose-500/30 dark:text-rose-200 dark:hover:bg-rose-500/10"
-                  >
-                    <Trash2 size={15} />
-                    删除
-                  </button>
+                  {selectedSkill.readOnly ? (
+                    <span className="inline-flex items-center gap-2 rounded-lg border border-amber-300/60 px-3 py-2 text-sm font-medium text-amber-700 dark:border-amber-500/30 dark:text-amber-200">
+                      <Library size={15} />
+                      来自 {selectedSkill.sourceTitle || '游资skills'}（只读）
+                    </span>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => updateSkill(selectedSkill.id, (current) => ({ ...current, enabled: !current.enabled }))}
+                        className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium ${
+                          selectedSkill.enabled
+                            ? 'border-emerald-300/60 text-emerald-700 hover:bg-emerald-100/80 dark:border-emerald-500/30 dark:text-emerald-200 dark:hover:bg-emerald-500/10'
+                            : 'border-slate-300/60 text-slate-700 hover:bg-slate-100/80 dark:border-white/15 dark:text-slate-200 dark:hover:bg-white/10'
+                        }`}
+                      >
+                        <CheckCircle2 size={15} />
+                        {selectedSkill.enabled ? '已启用' : '未启用'}
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSkill(selectedSkill.id)}
+                        className="inline-flex items-center gap-2 rounded-lg border border-rose-300/60 px-3 py-2 text-sm font-medium text-rose-700 hover:bg-rose-100/80 dark:border-rose-500/30 dark:text-rose-200 dark:hover:bg-rose-500/10"
+                      >
+                        <Trash2 size={15} />
+                        删除
+                      </button>
+                    </>
+                  )}
                 </div>
               }
             >
@@ -275,6 +321,7 @@ const SkillsSection: React.FC = () => {
                       onChange={(event) => updateSkill(selectedSkill.id, (current) => ({ ...current, name: event.target.value }))}
                       className={`${INPUT_CLASS_NAME} mt-2`}
                       placeholder="例如：超短龙头复盘框架"
+                      readOnly={selectedSkill.readOnly}
                     />
                   </div>
 
@@ -285,6 +332,7 @@ const SkillsSection: React.FC = () => {
                       onChange={(event) => updateSkill(selectedSkill.id, (current) => ({ ...current, description: event.target.value }))}
                       className={`${INPUT_CLASS_NAME} mt-2`}
                       placeholder="说明这个 skill 解决什么问题"
+                      readOnly={selectedSkill.readOnly}
                     />
                   </div>
 
@@ -295,6 +343,7 @@ const SkillsSection: React.FC = () => {
                       onChange={(event) => updateSkill(selectedSkill.id, (current) => ({ ...current, instructions: event.target.value }))}
                       className={`${TEXTAREA_CLASS_NAME} mt-2`}
                       placeholder="例如：优先围绕龙头、补涨、分歧转一致组织复盘；输出必须明确主线、前排、后排和不可做动作。"
+                      readOnly={selectedSkill.readOnly}
                     />
                     <div className="mt-2 text-xs leading-6 text-slate-500 dark:text-gray-400">
                       这里写的是直接注入给 AI 的硬规则，越具体越好，适合写结构、风格、限制条件和复盘口径。
