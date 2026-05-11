@@ -1,126 +1,5 @@
 [
   {
-    "date": "03-31",
-    "firstBoardCount": 45,
-    "secondBoardCount": 6,
-    "thirdBoardCount": 1,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 53,
-    "firstBoardRatio": 84.9,
-    "relayCount": 8,
-    "highBoardRatio": 1.9
-  },
-  {
-    "date": "04-01",
-    "firstBoardCount": 51,
-    "secondBoardCount": 4,
-    "thirdBoardCount": 0,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 56,
-    "firstBoardRatio": 91.1,
-    "relayCount": 5,
-    "highBoardRatio": 1.8
-  },
-  {
-    "date": "04-02",
-    "firstBoardCount": 22,
-    "secondBoardCount": 2,
-    "thirdBoardCount": 3,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 28,
-    "firstBoardRatio": 78.6,
-    "relayCount": 6,
-    "highBoardRatio": 3.6
-  },
-  {
-    "date": "04-03",
-    "firstBoardCount": 32,
-    "secondBoardCount": 3,
-    "thirdBoardCount": 0,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 36,
-    "firstBoardRatio": 88.9,
-    "relayCount": 4,
-    "highBoardRatio": 2.8
-  },
-  {
-    "date": "04-07",
-    "firstBoardCount": 86,
-    "secondBoardCount": 4,
-    "thirdBoardCount": 2,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 93,
-    "firstBoardRatio": 92.5,
-    "relayCount": 7,
-    "highBoardRatio": 1.1
-  },
-  {
-    "date": "04-08",
-    "firstBoardCount": 112,
-    "secondBoardCount": 9,
-    "thirdBoardCount": 1,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 123,
-    "firstBoardRatio": 91.1,
-    "relayCount": 11,
-    "highBoardRatio": 0.8
-  },
-  {
-    "date": "04-09",
-    "firstBoardCount": 41,
-    "secondBoardCount": 10,
-    "thirdBoardCount": 1,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 53,
-    "firstBoardRatio": 77.4,
-    "relayCount": 12,
-    "highBoardRatio": 1.9
-  },
-  {
-    "date": "04-10",
-    "firstBoardCount": 46,
-    "secondBoardCount": 9,
-    "thirdBoardCount": 3,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 59,
-    "firstBoardRatio": 78.0,
-    "relayCount": 13,
-    "highBoardRatio": 1.7
-  },
-  {
-    "date": "04-13",
-    "firstBoardCount": 51,
-    "secondBoardCount": 4,
-    "thirdBoardCount": 2,
-    "highBoardCount": 2,
-    "totalLimitUpCount": 59,
-    "firstBoardRatio": 86.4,
-    "relayCount": 8,
-    "highBoardRatio": 3.4
-  },
-  {
-    "date": "04-14",
-    "firstBoardCount": 45,
-    "secondBoardCount": 6,
-    "thirdBoardCount": 1,
-    "highBoardCount": 3,
-    "totalLimitUpCount": 55,
-    "firstBoardRatio": 81.8,
-    "relayCount": 10,
-    "highBoardRatio": 5.5
-  },
-  {
-    "date": "04-15",
-    "firstBoardCount": 46,
-    "secondBoardCount": 8,
-    "thirdBoardCount": 2,
-    "highBoardCount": 1,
-    "totalLimitUpCount": 57,
-    "firstBoardRatio": 80.7,
-    "relayCount": 11,
-    "highBoardRatio": 1.8
-  },
-  {
     "date": "04-16",
     "firstBoardCount": 71,
     "secondBoardCount": 5,
@@ -130,5 +9,126 @@
     "firstBoardRatio": 89.9,
     "relayCount": 8,
     "highBoardRatio": 2.5
+  },
+  {
+    "date": "04-17",
+    "firstBoardCount": 58,
+    "secondBoardCount": 8,
+    "thirdBoardCount": 2,
+    "highBoardCount": 3,
+    "totalLimitUpCount": 71,
+    "firstBoardRatio": 81.7,
+    "relayCount": 13,
+    "highBoardRatio": 4.2
+  },
+  {
+    "date": "04-20",
+    "firstBoardCount": 60,
+    "secondBoardCount": 11,
+    "thirdBoardCount": 3,
+    "highBoardCount": 1,
+    "totalLimitUpCount": 75,
+    "firstBoardRatio": 80.0,
+    "relayCount": 15,
+    "highBoardRatio": 1.3
+  },
+  {
+    "date": "04-21",
+    "firstBoardCount": 45,
+    "secondBoardCount": 4,
+    "thirdBoardCount": 3,
+    "highBoardCount": 1,
+    "totalLimitUpCount": 53,
+    "firstBoardRatio": 84.9,
+    "relayCount": 8,
+    "highBoardRatio": 1.9
+  },
+  {
+    "date": "04-22",
+    "firstBoardCount": 47,
+    "secondBoardCount": 6,
+    "thirdBoardCount": 0,
+    "highBoardCount": 2,
+    "totalLimitUpCount": 55,
+    "firstBoardRatio": 85.5,
+    "relayCount": 8,
+    "highBoardRatio": 3.6
+  },
+  {
+    "date": "04-23",
+    "firstBoardCount": 41,
+    "secondBoardCount": 5,
+    "thirdBoardCount": 3,
+    "highBoardCount": 1,
+    "totalLimitUpCount": 50,
+    "firstBoardRatio": 82.0,
+    "relayCount": 9,
+    "highBoardRatio": 2.0
+  },
+  {
+    "date": "04-24",
+    "firstBoardCount": 51,
+    "secondBoardCount": 6,
+    "thirdBoardCount": 2,
+    "highBoardCount": 0,
+    "totalLimitUpCount": 59,
+    "firstBoardRatio": 86.4,
+    "relayCount": 8,
+    "highBoardRatio": 0.0
+  },
+  {
+    "date": "04-27",
+    "firstBoardCount": 56,
+    "secondBoardCount": 6,
+    "thirdBoardCount": 2,
+    "highBoardCount": 1,
+    "totalLimitUpCount": 65,
+    "firstBoardRatio": 86.2,
+    "relayCount": 9,
+    "highBoardRatio": 1.5
+  },
+  {
+    "date": "04-28",
+    "firstBoardCount": 48,
+    "secondBoardCount": 9,
+    "thirdBoardCount": 1,
+    "highBoardCount": 2,
+    "totalLimitUpCount": 60,
+    "firstBoardRatio": 80.0,
+    "relayCount": 12,
+    "highBoardRatio": 3.3
+  },
+  {
+    "date": "04-29",
+    "firstBoardCount": 89,
+    "secondBoardCount": 9,
+    "thirdBoardCount": 2,
+    "highBoardCount": 0,
+    "totalLimitUpCount": 100,
+    "firstBoardRatio": 89.0,
+    "relayCount": 11,
+    "highBoardRatio": 0.0
+  },
+  {
+    "date": "04-30",
+    "firstBoardCount": 61,
+    "secondBoardCount": 14,
+    "thirdBoardCount": 3,
+    "highBoardCount": 1,
+    "totalLimitUpCount": 79,
+    "firstBoardRatio": 77.2,
+    "relayCount": 18,
+    "highBoardRatio": 1.3
+  },
+  {
+    "date": "05-06",
+    "firstBoardCount": 84,
+    "secondBoardCount": 11,
+    "thirdBoardCount": 3,
+    "highBoardCount": 3,
+    "totalLimitUpCount": 101,
+    "firstBoardRatio": 83.2,
+    "relayCount": 17,
+    "highBoardRatio": 3.0
   }
 ]

@@ -1,57 +1,57 @@
 {
   "boardType": "industry",
-  "currentLeaderName": "SPD概念",
-  "currentLeaderCode": "BK1147",
-  "currentLeaderPctChange": 4.3,
-  "currentStreakDays": 1,
-  "currentTopThreeAppearances": 1,
-  "strongestRepeatName": "昨日连板_含一字",
-  "strongestRepeatCount": 4,
+  "currentLeaderName": "883422.TI",
+  "currentLeaderCode": "883422.TI",
+  "currentLeaderPctChange": 15.83,
+  "currentStreakDays": 2,
+  "currentTopThreeAppearances": 2,
+  "strongestRepeatName": "883905.TI",
+  "strongestRepeatCount": 3,
   "entries": [
     {
-      "date": "04-09",
-      "leaderName": "昨日连板_含一字",
-      "leaderCode": "BK1051",
-      "leaderPctChange": 1.92,
+      "date": "04-27",
+      "leaderName": "883401.TI",
+      "leaderCode": "883401.TI",
+      "leaderPctChange": 5.02,
       "streakDays": 1,
-      "topThreeAppearances": 4,
+      "topThreeAppearances": 2,
       "strengthDelta": null
     },
     {
-      "date": "04-10",
-      "leaderName": "昨日连板_含一字",
-      "leaderCode": "BK1051",
-      "leaderPctChange": 4.05,
-      "streakDays": 2,
-      "topThreeAppearances": 4,
-      "strengthDelta": 2.13
+      "date": "04-28",
+      "leaderName": "883996.TI",
+      "leaderCode": "883996.TI",
+      "leaderPctChange": 10.02,
+      "streakDays": 1,
+      "topThreeAppearances": 2,
+      "strengthDelta": null
     },
     {
-      "date": "04-13",
-      "leaderName": "昨日连板_含一字",
-      "leaderCode": "BK1051",
-      "leaderPctChange": 3.71,
-      "streakDays": 3,
-      "topThreeAppearances": 4,
-      "strengthDelta": -0.34
-    },
-    {
-      "date": "04-14",
-      "leaderName": "昨日连板_含一字",
-      "leaderCode": "BK1051",
-      "leaderPctChange": 3.26,
-      "streakDays": 4,
-      "topThreeAppearances": 4,
-      "strengthDelta": -0.45
-    },
-    {
-      "date": "04-15",
-      "leaderName": "SPD概念",
-      "leaderCode": "BK1147",
-      "leaderPctChange": 4.3,
+      "date": "04-29",
+      "leaderName": "883936.TI",
+      "leaderCode": "883936.TI",
+      "leaderPctChange": 7.08,
       "streakDays": 1,
       "topThreeAppearances": 1,
       "strengthDelta": null
+    },
+    {
+      "date": "04-30",
+      "leaderName": "883422.TI",
+      "leaderCode": "883422.TI",
+      "leaderPctChange": 29.99,
+      "streakDays": 1,
+      "topThreeAppearances": 2,
+      "strengthDelta": null
+    },
+    {
+      "date": "05-06",
+      "leaderName": "883422.TI",
+      "leaderCode": "883422.TI",
+      "leaderPctChange": 15.83,
+      "streakDays": 2,
+      "topThreeAppearances": 2,
+      "strengthDelta": -14.17
     }
   ]
 }

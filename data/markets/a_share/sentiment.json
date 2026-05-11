@@ -1,161 +1,11 @@
 [
   {
-    "date": "2026-03-17",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 1421,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-18",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 2155,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-19",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 1645,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-20",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 1229,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-23",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 474,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-24",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 2534,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-25",
-    "value": 2,
-    "height": 0,
-    "limitUpCount": 0,
-    "limitDownCount": 0,
-    "riseCount": 2661,
-    "rawZt": {
-      "counts": {},
-      "total": 0
-    }
-  },
-  {
-    "date": "2026-03-26",
-    "value": 2,
-    "height": 3,
-    "limitUpCount": 39,
-    "limitDownCount": 0,
-    "riseCount": 1562,
-    "rawZt": {
-      "counts": {
-        "3": 4,
-        "1": 29,
-        "2": 6
-      },
-      "total": 39
-    }
-  },
-  {
-    "date": "2026-03-27",
-    "value": 3.75,
-    "height": 4,
-    "limitUpCount": 78,
-    "limitDownCount": 0,
-    "riseCount": 3352,
-    "rawZt": {
-      "counts": {
-        "2": 7,
-        "1": 68,
-        "4": 3
-      },
-      "total": 78
-    }
-  },
-  {
-    "date": "2026-03-30",
-    "value": 2.38,
-    "height": 5,
-    "limitUpCount": 62,
-    "limitDownCount": 0,
-    "riseCount": 2901,
-    "rawZt": {
-      "counts": {
-        "1": 50,
-        "2": 10,
-        "5": 1,
-        "3": 1
-      },
-      "total": 62
-    }
-  },
-  {
-    "date": "2026-03-31",
-    "value": 3.67,
-    "height": 4,
-    "limitUpCount": 53,
-    "limitDownCount": 0,
-    "riseCount": 1679,
-    "rawZt": {
-      "counts": {
-        "1": 45,
-        "2": 6,
-        "3": 1,
-        "4": 1
-      },
-      "total": 53
-    }
-  },
-  {
     "date": "2026-04-01",
     "value": 3.33,
     "height": 4,
     "limitUpCount": 56,
     "limitDownCount": 0,
-    "riseCount": 2372,
+    "riseCount": 4494,
     "rawZt": {
       "counts": {
         "1": 51,
@@ -171,7 +21,7 @@
     "height": 5,
     "limitUpCount": 28,
     "limitDownCount": 0,
-    "riseCount": 1757,
+    "riseCount": 1052,
     "rawZt": {
       "counts": {
         "1": 22,
@@ -188,7 +38,7 @@
     "height": 6,
     "limitUpCount": 36,
     "limitDownCount": 0,
-    "riseCount": 1358,
+    "riseCount": 716,
     "rawZt": {
       "counts": {
         "2": 3,
@@ -204,7 +54,7 @@
     "height": 7,
     "limitUpCount": 93,
     "limitDownCount": 0,
-    "riseCount": 2473,
+    "riseCount": 3976,
     "rawZt": {
       "counts": {
         "3": 2,
@@ -221,7 +71,7 @@
     "height": 4,
     "limitUpCount": 123,
     "limitDownCount": 0,
-    "riseCount": 3563,
+    "riseCount": 5170,
     "rawZt": {
       "counts": {
         "1": 112,
@@ -238,7 +88,7 @@
     "height": 5,
     "limitUpCount": 53,
     "limitDownCount": 0,
-    "riseCount": 2188,
+    "riseCount": 1140,
     "rawZt": {
       "counts": {
         "1": 41,
@@ -255,7 +105,7 @@
     "height": 4,
     "limitUpCount": 59,
     "limitDownCount": 0,
-    "riseCount": 2248,
+    "riseCount": 3973,
     "rawZt": {
       "counts": {
         "3": 3,
@@ -272,7 +122,7 @@
     "height": 5,
     "limitUpCount": 59,
     "limitDownCount": 0,
-    "riseCount": 2520,
+    "riseCount": 2377,
     "rawZt": {
       "counts": {
         "3": 2,
@@ -290,7 +140,7 @@
     "height": 6,
     "limitUpCount": 55,
     "limitDownCount": 0,
-    "riseCount": 2543,
+    "riseCount": 3723,
     "rawZt": {
       "counts": {
         "2": 6,
@@ -308,7 +158,7 @@
     "height": 5,
     "limitUpCount": 57,
     "limitDownCount": 0,
-    "riseCount": 2031,
+    "riseCount": 1841,
     "rawZt": {
       "counts": {
         "3": 2,
@@ -325,7 +175,7 @@
     "height": 6,
     "limitUpCount": 79,
     "limitDownCount": 0,
-    "riseCount": 2726,
+    "riseCount": 4289,
     "rawZt": {
       "counts": {
         "4": 1,
@@ -335,6 +185,193 @@
         "3": 1
       },
       "total": 79
+    }
+  },
+  {
+    "date": "2026-04-17",
+    "value": 5,
+    "height": 7,
+    "limitUpCount": 71,
+    "limitDownCount": 3,
+    "riseCount": 2401,
+    "rawZt": {
+      "counts": {
+        "1": 58,
+        "5": 1,
+        "7": 1,
+        "2": 8,
+        "4": 1,
+        "3": 2
+      },
+      "total": 71
+    }
+  },
+  {
+    "date": "2026-04-20",
+    "value": 2.75,
+    "height": 6,
+    "limitUpCount": 75,
+    "limitDownCount": 6,
+    "riseCount": 2737,
+    "rawZt": {
+      "counts": {
+        "1": 60,
+        "2": 11,
+        "6": 1,
+        "3": 3
+      },
+      "total": 75
+    }
+  },
+  {
+    "date": "2026-04-21",
+    "value": 2.02,
+    "height": 4,
+    "limitUpCount": 53,
+    "limitDownCount": 9,
+    "riseCount": 2323,
+    "rawZt": {
+      "counts": {
+        "1": 45,
+        "3": 3,
+        "2": 4,
+        "4": 1
+      },
+      "total": 53
+    }
+  },
+  {
+    "date": "2026-04-22",
+    "value": 2.22,
+    "height": 4,
+    "limitUpCount": 55,
+    "limitDownCount": 3,
+    "riseCount": 2710,
+    "rawZt": {
+      "counts": {
+        "1": 47,
+        "4": 2,
+        "2": 6
+      },
+      "total": 55
+    }
+  },
+  {
+    "date": "2026-04-23",
+    "value": 5.0,
+    "height": 5,
+    "limitUpCount": 50,
+    "limitDownCount": 15,
+    "riseCount": 1863,
+    "rawZt": {
+      "counts": {
+        "1": 41,
+        "2": 5,
+        "5": 1,
+        "3": 3
+      },
+      "total": 50
+    }
+  },
+  {
+    "date": "2026-04-24",
+    "value": 1.33,
+    "height": 3,
+    "limitUpCount": 59,
+    "limitDownCount": 20,
+    "riseCount": 2138,
+    "rawZt": {
+      "counts": {
+        "1": 51,
+        "2": 6,
+        "3": 2
+      },
+      "total": 59
+    }
+  },
+  {
+    "date": "2026-04-27",
+    "value": 4.17,
+    "height": 4,
+    "limitUpCount": 65,
+    "limitDownCount": 34,
+    "riseCount": 2308,
+    "rawZt": {
+      "counts": {
+        "2": 6,
+        "1": 56,
+        "3": 2,
+        "4": 1
+      },
+      "total": 65
+    }
+  },
+  {
+    "date": "2026-04-28",
+    "value": 5.56,
+    "height": 5,
+    "limitUpCount": 60,
+    "limitDownCount": 30,
+    "riseCount": 2160,
+    "rawZt": {
+      "counts": {
+        "2": 9,
+        "1": 48,
+        "3": 1,
+        "4": 1,
+        "5": 1
+      },
+      "total": 60
+    }
+  },
+  {
+    "date": "2026-04-29",
+    "value": 0.56,
+    "height": 3,
+    "limitUpCount": 100,
+    "limitDownCount": 13,
+    "riseCount": 3079,
+    "rawZt": {
+      "counts": {
+        "1": 89,
+        "2": 9,
+        "3": 2
+      },
+      "total": 100
+    }
+  },
+  {
+    "date": "2026-04-30",
+    "value": 4.17,
+    "height": 4,
+    "limitUpCount": 79,
+    "limitDownCount": 11,
+    "riseCount": 2349,
+    "rawZt": {
+      "counts": {
+        "1": 61,
+        "2": 14,
+        "3": 3,
+        "4": 1
+      },
+      "total": 79
+    }
+  },
+  {
+    "date": "2026-05-06",
+    "value": 4.05,
+    "height": 4,
+    "limitUpCount": 101,
+    "limitDownCount": 2,
+    "riseCount": 2785,
+    "rawZt": {
+      "counts": {
+        "1": 84,
+        "2": 11,
+        "3": 3,
+        "4": 3
+      },
+      "total": 101
     }
   }
 ]

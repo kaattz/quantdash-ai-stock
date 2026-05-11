@@ -1,10 +1,10 @@
 {
   "dates": [
-    "04-15",
-    "04-14",
-    "04-13",
-    "04-10",
-    "04-09"
+    "05-06",
+    "04-30",
+    "04-29",
+    "04-28",
+    "04-27"
   ],
   "ranks": [
     1,
@@ -17,253 +17,253 @@
     8
   ],
   "data": {
-    "04-15": {
+    "05-06": {
       "1": {
-        "code": "BK1489",
-        "name": "快递",
-        "pctChange": 6.01,
+        "code": "883422.TI",
+        "name": "883422.TI",
+        "pctChange": 15.83,
         "rank": 1
       },
       "2": {
-        "code": "BK1606",
-        "name": "线下药店",
-        "pctChange": 6.01,
+        "code": "883996.TI",
+        "name": "883996.TI",
+        "pctChange": 10.01,
         "rank": 2
       },
       "3": {
-        "code": "BK1507",
-        "name": "宠物食品",
-        "pctChange": 5.72,
+        "code": "883998.TI",
+        "name": "883998.TI",
+        "pctChange": 10.01,
         "rank": 3
       },
       "4": {
-        "code": "BK1042",
-        "name": "医药商业",
-        "pctChange": 4.35,
+        "code": "700410.TI",
+        "name": "700410.TI",
+        "pctChange": 8.46,
         "rank": 4
       },
       "5": {
-        "code": "BK1475",
-        "name": "国际工程",
-        "pctChange": 3.93,
+        "code": "700564.TI",
+        "name": "700564.TI",
+        "pctChange": 8.46,
         "rank": 5
       },
       "6": {
-        "code": "BK1372",
-        "name": "冶钢辅料",
-        "pctChange": 2.71,
+        "code": "883905.TI",
+        "name": "883905.TI",
+        "pctChange": 6.96,
         "rank": 6
       },
       "7": {
-        "code": "BK1311",
-        "name": "输变电设备",
-        "pctChange": 2.59,
+        "code": "883908.TI",
+        "name": "883908.TI",
+        "pctChange": 6.47,
         "rank": 7
       },
       "8": {
-        "code": "BK1594",
-        "name": "化学制剂",
-        "pctChange": 2.42,
+        "code": "883936.TI",
+        "name": "883936.TI",
+        "pctChange": 6.17,
         "rank": 8
       }
     },
-    "04-14": {
+    "04-30": {
       "1": {
-        "code": "BK1475",
-        "name": "国际工程",
-        "pctChange": 5.67,
+        "code": "883422.TI",
+        "name": "883422.TI",
+        "pctChange": 29.99,
         "rank": 1
       },
       "2": {
-        "code": "BK1337",
-        "name": "品牌消费电子",
-        "pctChange": 2.8,
+        "code": "883905.TI",
+        "name": "883905.TI",
+        "pctChange": 5.84,
         "rank": 2
       },
       "3": {
-        "code": "BK1258",
-        "name": "饲料",
-        "pctChange": 1.79,
+        "code": "700570.TI",
+        "name": "700570.TI",
+        "pctChange": 4.33,
         "rank": 3
       },
       "4": {
-        "code": "BK1500",
-        "name": "医美耗材",
-        "pctChange": 1.55,
+        "code": "883936.TI",
+        "name": "883936.TI",
+        "pctChange": 3.1,
         "rank": 4
       },
       "5": {
-        "code": "BK1308",
-        "name": "电工仪器仪表",
-        "pctChange": 1.49,
+        "code": "884287.TI",
+        "name": "884287.TI",
+        "pctChange": 2.99,
         "rank": 5
       },
       "6": {
-        "code": "BK0457",
-        "name": "电网设备",
-        "pctChange": 1.1,
+        "code": "884091.TI",
+        "name": "884091.TI",
+        "pctChange": 2.6,
         "rank": 6
       },
       "7": {
-        "code": "BK1311",
-        "name": "输变电设备",
-        "pctChange": 1.0,
+        "code": "883913.TI",
+        "name": "883913.TI",
+        "pctChange": 2.44,
         "rank": 7
       },
       "8": {
-        "code": "BK1594",
-        "name": "化学制剂",
-        "pctChange": 0.83,
+        "code": "883401.TI",
+        "name": "883401.TI",
+        "pctChange": 2.36,
         "rank": 8
       }
     },
-    "04-13": {
+    "04-29": {
       "1": {
-        "code": "BK1596",
-        "name": "其他生物制品",
-        "pctChange": 0.68,
+        "code": "883936.TI",
+        "name": "883936.TI",
+        "pctChange": 7.08,
         "rank": 1
       },
       "2": {
-        "code": "BK1258",
-        "name": "饲料",
-        "pctChange": 0.27,
+        "code": "883905.TI",
+        "name": "883905.TI",
+        "pctChange": 4.37,
         "rank": 2
       },
       "3": {
-        "code": "BK1308",
-        "name": "电工仪器仪表",
-        "pctChange": 0.1,
+        "code": "881169.TI",
+        "name": "881169.TI",
+        "pctChange": 3.8,
         "rank": 3
       },
       "4": {
-        "code": "BK1563",
-        "name": "自然景区",
-        "pctChange": 0.03,
+        "code": "884185.TI",
+        "name": "884185.TI",
+        "pctChange": 3.8,
         "rank": 4
       },
       "5": {
-        "code": "BK1337",
-        "name": "品牌消费电子",
-        "pctChange": -0.16,
+        "code": "700469.TI",
+        "name": "700469.TI",
+        "pctChange": 3.72,
         "rank": 5
       },
       "6": {
-        "code": "BK1312",
-        "name": "线缆部件及其他",
-        "pctChange": -0.17,
+        "code": "884059.TI",
+        "name": "884059.TI",
+        "pctChange": 2.88,
         "rank": 6
       },
       "7": {
-        "code": "BK1548",
-        "name": "综合电商",
-        "pctChange": -0.26,
+        "code": "700410.TI",
+        "name": "700410.TI",
+        "pctChange": 2.41,
         "rank": 7
       },
       "8": {
-        "code": "BK1453",
-        "name": "彩电",
-        "pctChange": -0.31,
+        "code": "700564.TI",
+        "name": "700564.TI",
+        "pctChange": 2.41,
         "rank": 8
       }
     },
-    "04-10": {
+    "04-28": {
       "1": {
-        "code": "BK1337",
-        "name": "品牌消费电子",
-        "pctChange": 3.71,
+        "code": "883996.TI",
+        "name": "883996.TI",
+        "pctChange": 10.02,
         "rank": 1
       },
       "2": {
-        "code": "BK1596",
-        "name": "其他生物制品",
-        "pctChange": 1.75,
+        "code": "883998.TI",
+        "name": "883998.TI",
+        "pctChange": 3.24,
         "rank": 2
       },
       "3": {
-        "code": "BK1548",
-        "name": "综合电商",
+        "code": "883401.TI",
+        "name": "883401.TI",
         "pctChange": 1.34,
         "rank": 3
       },
       "4": {
-        "code": "BK1563",
-        "name": "自然景区",
-        "pctChange": 1.25,
+        "code": "700586.TI",
+        "name": "700586.TI",
+        "pctChange": 0.0,
         "rank": 4
       },
       "5": {
-        "code": "BK1507",
-        "name": "宠物食品",
-        "pctChange": 1.14,
+        "code": "883913.TI",
+        "name": "883913.TI",
+        "pctChange": -0.23,
         "rank": 5
       },
       "6": {
-        "code": "BK1489",
-        "name": "快递",
-        "pctChange": 1.08,
+        "code": "884315.TI",
+        "name": "884315.TI",
+        "pctChange": -0.31,
         "rank": 6
       },
       "7": {
-        "code": "BK1311",
-        "name": "输变电设备",
-        "pctChange": 0.97,
+        "code": "883968.TI",
+        "name": "883968.TI",
+        "pctChange": -0.44,
         "rank": 7
       },
       "8": {
-        "code": "BK1500",
-        "name": "医美耗材",
-        "pctChange": 0.78,
+        "code": "883908.TI",
+        "name": "883908.TI",
+        "pctChange": -0.54,
         "rank": 8
       }
     },
-    "04-09": {
+    "04-27": {
       "1": {
-        "code": "BK1453",
-        "name": "彩电",
-        "pctChange": 0.04,
+        "code": "883401.TI",
+        "name": "883401.TI",
+        "pctChange": 5.02,
         "rank": 1
       },
       "2": {
-        "code": "BK1337",
-        "name": "品牌消费电子",
-        "pctChange": -0.73,
+        "code": "883905.TI",
+        "name": "883905.TI",
+        "pctChange": 3.95,
         "rank": 2
       },
       "3": {
-        "code": "BK1489",
-        "name": "快递",
-        "pctChange": -0.81,
+        "code": "884287.TI",
+        "name": "884287.TI",
+        "pctChange": 3.48,
         "rank": 3
       },
       "4": {
-        "code": "BK1596",
-        "name": "其他生物制品",
-        "pctChange": -1.0,
+        "code": "884091.TI",
+        "name": "884091.TI",
+        "pctChange": 2.83,
         "rank": 4
       },
       "5": {
-        "code": "BK1311",
-        "name": "输变电设备",
-        "pctChange": -1.15,
+        "code": "700570.TI",
+        "name": "700570.TI",
+        "pctChange": 2.75,
         "rank": 5
       },
       "6": {
-        "code": "BK1308",
-        "name": "电工仪器仪表",
-        "pctChange": -1.18,
+        "code": "884059.TI",
+        "name": "884059.TI",
+        "pctChange": 2.62,
         "rank": 6
       },
       "7": {
-        "code": "BK0457",
-        "name": "电网设备",
-        "pctChange": -1.22,
+        "code": "700410.TI",
+        "name": "700410.TI",
+        "pctChange": 2.05,
         "rank": 7
       },
       "8": {
-        "code": "BK1312",
-        "name": "线缆部件及其他",
-        "pctChange": -1.36,
+        "code": "700564.TI",
+        "name": "700564.TI",
+        "pctChange": 2.05,
         "rank": 8
       }
     }

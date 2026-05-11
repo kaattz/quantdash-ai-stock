@@ -1,9 +1,9 @@
 {
   "trigger": "startup-sync",
-  "startedAt": "2026-04-16T19:12:19.059Z",
-  "finishedAt": "2026-04-16T19:18:07.668Z",
-  "durationMs": 348609,
-  "updatedAt": "2026-04-16T19:18:07.668Z",
+  "startedAt": "2026-05-06T13:06:56.971Z",
+  "finishedAt": "2026-05-06T13:15:28.974Z",
+  "durationMs": 512003,
+  "updatedAt": "2026-05-06T13:15:28.974Z",
   "overallStatus": "completed",
   "counts": {
     "completed": 4,
@@ -11,15 +11,15 @@
     "failed": 0,
     "total": 7
   },
-  "onlineTradingDate": "2026-04-16",
-  "onlineMonthDay": "04-16",
+  "onlineTradingDate": "2026-05-06",
+  "onlineMonthDay": "05-06",
   "latestSnapshots": {
-    "sentiment": "2026-04-16",
-    "performance": "04-16",
+    "sentiment": "2026-05-06",
+    "performance": "05-06",
     "emotion": "2026-04-15",
-    "cycle": "04-16",
-    "klineManifestCount": 5583,
-    "klineManifestStamp": "2026-04-17"
+    "cycle": "05-06",
+    "klineManifestCount": 5593,
+    "klineManifestStamp": "2026-05-06"
   },
   "stages": [
     {
@@ -27,17 +27,17 @@
       "name": "Stock Snapshots (tushare)",
       "status": "completed",
       "reason": null,
-      "startedAt": "2026-04-16T19:12:19.235Z",
-      "finishedAt": "2026-04-16T19:14:19.997Z",
-      "durationMs": 120762
+      "startedAt": "2026-05-06T13:06:57.202Z",
+      "finishedAt": "2026-05-06T13:11:07.738Z",
+      "durationMs": 250536
     },
     {
       "key": "market-core",
       "name": "Market Core Snapshot",
       "status": "skipped",
-      "reason": "already up-to-date (2026-04-16)",
-      "startedAt": "2026-04-16T19:14:20.006Z",
-      "finishedAt": "2026-04-16T19:14:20.006Z",
+      "reason": "already up-to-date (2026-05-06)",
+      "startedAt": "2026-05-06T13:11:07.743Z",
+      "finishedAt": "2026-05-06T13:11:07.743Z",
       "durationMs": 0
     },
     {
@@ -45,26 +45,26 @@
       "name": "Emotion Indicators",
       "status": "completed",
       "reason": null,
-      "startedAt": "2026-04-16T19:14:20.012Z",
-      "finishedAt": "2026-04-16T19:14:25.377Z",
-      "durationMs": 5365
+      "startedAt": "2026-05-06T13:11:07.746Z",
+      "finishedAt": "2026-05-06T13:11:19.089Z",
+      "durationMs": 11343
     },
     {
       "key": "sectors",
       "name": "Sector Snapshots",
       "status": "skipped",
-      "reason": "already updated on 2026-04-16",
-      "startedAt": "2026-04-16T19:14:25.378Z",
-      "finishedAt": "2026-04-16T19:14:25.378Z",
+      "reason": "already updated on 2026-05-06",
+      "startedAt": "2026-05-06T13:11:19.095Z",
+      "finishedAt": "2026-05-06T13:11:19.095Z",
       "durationMs": 0
     },
     {
       "key": "cycle",
       "name": "Sentiment Cycle Snapshots",
       "status": "skipped",
-      "reason": "already up-to-date (04-16)",
-      "startedAt": "2026-04-16T19:14:25.380Z",
-      "finishedAt": "2026-04-16T19:14:25.380Z",
+      "reason": "already up-to-date (05-06)",
+      "startedAt": "2026-05-06T13:11:19.104Z",
+      "finishedAt": "2026-05-06T13:11:19.104Z",
       "durationMs": 0
     },
     {
@@ -72,18 +72,18 @@
       "name": "K-Line Library (tushare)",
       "status": "completed",
       "reason": null,
-      "startedAt": "2026-04-16T19:14:25.380Z",
-      "finishedAt": "2026-04-16T19:18:06.859Z",
-      "durationMs": 221479
+      "startedAt": "2026-05-06T13:11:19.104Z",
+      "finishedAt": "2026-05-06T13:15:28.765Z",
+      "durationMs": 249661
     },
     {
       "key": "stock-company",
       "name": "Stock Company Info (tushare)",
       "status": "completed",
       "reason": null,
-      "startedAt": "2026-04-16T19:18:06.859Z",
-      "finishedAt": "2026-04-16T19:18:07.666Z",
-      "durationMs": 807
+      "startedAt": "2026-05-06T13:15:28.765Z",
+      "finishedAt": "2026-05-06T13:15:28.972Z",
+      "durationMs": 207
     }
   ],
   "extra": {

@@ -1,104 +1,5 @@
 [
   {
-    "date": "03-30",
-    "brokenCount": 17,
-    "brokenRepairCount": 6,
-    "brokenRepairRate": 35.3,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "03-31",
-    "brokenCount": 17,
-    "brokenRepairCount": 7,
-    "brokenRepairRate": 41.2,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-01",
-    "brokenCount": 38,
-    "brokenRepairCount": 14,
-    "brokenRepairRate": 36.8,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-02",
-    "brokenCount": 18,
-    "brokenRepairCount": 4,
-    "brokenRepairRate": 22.2,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-03",
-    "brokenCount": 12,
-    "brokenRepairCount": 9,
-    "brokenRepairRate": 75.0,
-    "bigFaceCount": 1,
-    "bigFaceRepairCount": 1,
-    "bigFaceRepairRate": 100.0
-  },
-  {
-    "date": "04-07",
-    "brokenCount": 26,
-    "brokenRepairCount": 16,
-    "brokenRepairRate": 61.5,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-08",
-    "brokenCount": 16,
-    "brokenRepairCount": 6,
-    "brokenRepairRate": 37.5,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-09",
-    "brokenCount": 16,
-    "brokenRepairCount": 5,
-    "brokenRepairRate": 31.2,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-10",
-    "brokenCount": 27,
-    "brokenRepairCount": 14,
-    "brokenRepairRate": 51.9,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-13",
-    "brokenCount": 15,
-    "brokenRepairCount": 5,
-    "brokenRepairRate": 33.3,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
-    "date": "04-14",
-    "brokenCount": 18,
-    "brokenRepairCount": 8,
-    "brokenRepairRate": 44.4,
-    "bigFaceCount": 0,
-    "bigFaceRepairCount": 0,
-    "bigFaceRepairRate": 0
-  },
-  {
     "date": "04-15",
     "brokenCount": 24,
     "brokenRepairCount": 11,
@@ -106,5 +7,104 @@
     "bigFaceCount": 1,
     "bigFaceRepairCount": 0,
     "bigFaceRepairRate": 0.0
+  },
+  {
+    "date": "04-16",
+    "brokenCount": 23,
+    "brokenRepairCount": 21,
+    "brokenRepairRate": 91.3,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-17",
+    "brokenCount": 20,
+    "brokenRepairCount": 16,
+    "brokenRepairRate": 80.0,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-20",
+    "brokenCount": 15,
+    "brokenRepairCount": 12,
+    "brokenRepairRate": 80.0,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-21",
+    "brokenCount": 10,
+    "brokenRepairCount": 8,
+    "brokenRepairRate": 80.0,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-22",
+    "brokenCount": 21,
+    "brokenRepairCount": 18,
+    "brokenRepairRate": 85.7,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-23",
+    "brokenCount": 20,
+    "brokenRepairCount": 17,
+    "brokenRepairRate": 85.0,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-24",
+    "brokenCount": 20,
+    "brokenRepairCount": 15,
+    "brokenRepairRate": 75.0,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-27",
+    "brokenCount": 18,
+    "brokenRepairCount": 16,
+    "brokenRepairRate": 88.9,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-28",
+    "brokenCount": 13,
+    "brokenRepairCount": 9,
+    "brokenRepairRate": 69.2,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-29",
+    "brokenCount": 23,
+    "brokenRepairCount": 20,
+    "brokenRepairRate": 87.0,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
+  },
+  {
+    "date": "04-30",
+    "brokenCount": 14,
+    "brokenRepairCount": 10,
+    "brokenRepairRate": 71.4,
+    "bigFaceCount": 0,
+    "bigFaceRepairCount": 0,
+    "bigFaceRepairRate": 0
   }
 ]

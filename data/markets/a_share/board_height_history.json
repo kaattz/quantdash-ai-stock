@@ -1,352 +1,5 @@
 [
   {
-    "date": "03-27",
-    "fullDate": "2026-03-27",
-    "mainBoardHighest": 4,
-    "mainBoardHighestNames": [
-      "新能泰山",
-      "美诺华",
-      "融捷股份"
-    ],
-    "mainBoardHighestSymbols": [
-      "000720",
-      "603538",
-      "002192"
-    ],
-    "mainBoardSecondHighest": 2,
-    "mainBoardSecondHighestNames": [
-      "广西能源",
-      "晋控电力",
-      "金煤科技",
-      "万邦德",
-      "神剑股份",
-      "大东南",
-      "石大胜华"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "600310",
-      "000767",
-      "600844",
-      "002082",
-      "002361",
-      "002263",
-      "603026"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "科拓生物",
-      "田中精机",
-      "海科新源",
-      "舒泰神"
-    ],
-    "chinextHighestSymbols": [
-      "300858",
-      "300461",
-      "301292",
-      "300204"
-    ]
-  },
-  {
-    "date": "03-30",
-    "fullDate": "2026-03-30",
-    "mainBoardHighest": 5,
-    "mainBoardHighestNames": [
-      "美诺华"
-    ],
-    "mainBoardHighestSymbols": [
-      "603538"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "神剑股份"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "002361"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "宏昌科技",
-      "雪浪环境",
-      "广联航空"
-    ],
-    "chinextHighestSymbols": [
-      "301008",
-      "300385",
-      "300900"
-    ]
-  },
-  {
-    "date": "03-31",
-    "fullDate": "2026-03-31",
-    "mainBoardHighest": 4,
-    "mainBoardHighestNames": [
-      "神剑股份"
-    ],
-    "mainBoardHighestSymbols": [
-      "002361"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "津药药业"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "600488"
-    ],
-    "chinextHighest": 2,
-    "chinextHighestNames": [
-      "宏昌科技"
-    ],
-    "chinextHighestSymbols": [
-      "301008"
-    ]
-  },
-  {
-    "date": "04-01",
-    "fullDate": "2026-04-01",
-    "mainBoardHighest": 4,
-    "mainBoardHighestNames": [
-      "津药药业"
-    ],
-    "mainBoardHighestSymbols": [
-      "600488"
-    ],
-    "mainBoardSecondHighest": 2,
-    "mainBoardSecondHighestNames": [
-      "通达股份",
-      "新中港",
-      "凯莱英"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "002560",
-      "605162",
-      "002821"
-    ],
-    "chinextHighest": 2,
-    "chinextHighestNames": [
-      "星辉环材"
-    ],
-    "chinextHighestSymbols": [
-      "300834"
-    ]
-  },
-  {
-    "date": "04-02",
-    "fullDate": "2026-04-02",
-    "mainBoardHighest": 5,
-    "mainBoardHighestNames": [
-      "津药药业"
-    ],
-    "mainBoardHighestSymbols": [
-      "600488"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "新中港",
-      "通达股份"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "605162",
-      "002560"
-    ],
-    "chinextHighest": 3,
-    "chinextHighestNames": [
-      "星辉环材"
-    ],
-    "chinextHighestSymbols": [
-      "300834"
-    ]
-  },
-  {
-    "date": "04-03",
-    "fullDate": "2026-04-03",
-    "mainBoardHighest": 6,
-    "mainBoardHighestNames": [
-      "津药药业"
-    ],
-    "mainBoardHighestSymbols": [
-      "600488"
-    ],
-    "mainBoardSecondHighest": 2,
-    "mainBoardSecondHighestNames": [
-      "汇源通信",
-      "重药控股",
-      "新能泰山"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "000586",
-      "000950",
-      "000720"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "华瑞股份",
-      "思特奇",
-      "易天股份",
-      "莱美药业"
-    ],
-    "chinextHighestSymbols": [
-      "300626",
-      "300608",
-      "300812",
-      "300006"
-    ]
-  },
-  {
-    "date": "04-07",
-    "fullDate": "2026-04-07",
-    "mainBoardHighest": 7,
-    "mainBoardHighestNames": [
-      "津药药业"
-    ],
-    "mainBoardHighestSymbols": [
-      "600488"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "汇源通信",
-      "新能泰山"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "000586",
-      "000720"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "东岳硅材",
-      "同宇新材",
-      "凌玮科技",
-      "天瑞仪器",
-      "江天化学",
-      "金陵体育"
-    ],
-    "chinextHighestSymbols": [
-      "300821",
-      "301630",
-      "301373",
-      "300165",
-      "300927",
-      "300651"
-    ]
-  },
-  {
-    "date": "04-08",
-    "fullDate": "2026-04-08",
-    "mainBoardHighest": 4,
-    "mainBoardHighestNames": [
-      "汇源通信"
-    ],
-    "mainBoardHighestSymbols": [
-      "000586"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "中安科"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "600654"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "行云科技",
-      "平治信息",
-      "飞沃科技",
-      "蓝色光标",
-      "开勒股份",
-      "香农芯创",
-      "电连技术"
-    ],
-    "chinextHighestSymbols": [
-      "300209",
-      "300571",
-      "301232",
-      "300058",
-      "301070",
-      "300475",
-      "300679"
-    ]
-  },
-  {
-    "date": "04-09",
-    "fullDate": "2026-04-09",
-    "mainBoardHighest": 5,
-    "mainBoardHighestNames": [
-      "汇源通信"
-    ],
-    "mainBoardHighestSymbols": [
-      "000586"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "华远控股"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "600743"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "光智科技",
-      "标榜股份"
-    ],
-    "chinextHighestSymbols": [
-      "300489",
-      "301181"
-    ]
-  },
-  {
-    "date": "04-10",
-    "fullDate": "2026-04-10",
-    "mainBoardHighest": 4,
-    "mainBoardHighestNames": [
-      "华远控股"
-    ],
-    "mainBoardHighestSymbols": [
-      "600743"
-    ],
-    "mainBoardSecondHighest": 3,
-    "mainBoardSecondHighestNames": [
-      "中嘉博创",
-      "长源东谷",
-      "来伊份"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "000889",
-      "603950",
-      "603777"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "英唐智控"
-    ],
-    "chinextHighestSymbols": [
-      "300131"
-    ]
-  },
-  {
-    "date": "04-13",
-    "fullDate": "2026-04-13",
-    "mainBoardHighest": 5,
-    "mainBoardHighestNames": [
-      "华远控股"
-    ],
-    "mainBoardHighestSymbols": [
-      "600743"
-    ],
-    "mainBoardSecondHighest": 4,
-    "mainBoardSecondHighestNames": [
-      "长源东谷"
-    ],
-    "mainBoardSecondHighestSymbols": [
-      "603950"
-    ],
-    "chinextHighest": 1,
-    "chinextHighestNames": [
-      "纳百川"
-    ],
-    "chinextHighestSymbols": [
-      "301667"
-    ]
-  },
-  {
     "date": "04-14",
     "fullDate": "2026-04-14",
     "mainBoardHighest": 6,
@@ -368,16 +21,16 @@
     "chinextHighest": 1,
     "chinextHighestNames": [
       "协创数据",
-      "腾远钴业",
-      "奥尼电子",
       "华塑科技",
+      "奥尼电子",
+      "腾远钴业",
       "海科新源"
     ],
     "chinextHighestSymbols": [
       "300857",
-      "301219",
-      "301189",
       "301157",
+      "301189",
+      "301219",
       "301292"
     ]
   },
@@ -393,12 +46,12 @@
     ],
     "mainBoardSecondHighest": 3,
     "mainBoardSecondHighestNames": [
-      "博云新材",
-      "天邦食品"
+      "天邦食品",
+      "博云新材"
     ],
     "mainBoardSecondHighestSymbols": [
-      "002297",
-      "002124"
+      "002124",
+      "002297"
     ],
     "chinextHighest": 2,
     "chinextHighestNames": [
@@ -428,21 +81,402 @@
     "chinextHighest": 1,
     "chinextHighestNames": [
       "华谊兄弟",
-      "宝丽迪",
-      "乔锋智能",
+      "百邦科技",
       "锦鸡股份",
+      "宝丽迪",
       "嘉戎技术",
       "宏景科技",
-      "百邦科技"
+      "乔锋智能"
     ],
     "chinextHighestSymbols": [
       "300027",
-      "300905",
-      "301603",
+      "300736",
       "300798",
+      "300905",
       "301148",
       "301396",
-      "300736"
+      "301603"
+    ]
+  },
+  {
+    "date": "04-17",
+    "fullDate": "2026-04-17",
+    "mainBoardHighest": 7,
+    "mainBoardHighestNames": [
+      "圣阳股份"
+    ],
+    "mainBoardHighestSymbols": [
+      "002580"
+    ],
+    "mainBoardSecondHighest": 5,
+    "mainBoardSecondHighestNames": [
+      "博云新材"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "002297"
+    ],
+    "chinextHighest": 2,
+    "chinextHighestNames": [
+      "宝丽迪"
+    ],
+    "chinextHighestSymbols": [
+      "300905"
+    ]
+  },
+  {
+    "date": "04-20",
+    "fullDate": "2026-04-20",
+    "mainBoardHighest": 6,
+    "mainBoardHighestNames": [
+      "博云新材"
+    ],
+    "mainBoardHighestSymbols": [
+      "002297"
+    ],
+    "mainBoardSecondHighest": 3,
+    "mainBoardSecondHighestNames": [
+      "华升股份",
+      "株冶集团",
+      "可川科技"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "600156",
+      "600961",
+      "603052"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "蜀道装备",
+      "华新科技"
+    ],
+    "chinextHighestSymbols": [
+      "300540",
+      "301265"
+    ]
+  },
+  {
+    "date": "04-21",
+    "fullDate": "2026-04-21",
+    "mainBoardHighest": 4,
+    "mainBoardHighestNames": [
+      "株冶集团"
+    ],
+    "mainBoardHighestSymbols": [
+      "600961"
+    ],
+    "mainBoardSecondHighest": 3,
+    "mainBoardSecondHighestNames": [
+      "金 螳 螂",
+      "金富科技",
+      "圣龙股份"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "002081",
+      "003018",
+      "603178"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "安诺其",
+      "冰川网络",
+      "海泰科",
+      "致尚科技"
+    ],
+    "chinextHighestSymbols": [
+      "300067",
+      "300533",
+      "301022",
+      "301486"
+    ]
+  },
+  {
+    "date": "04-22",
+    "fullDate": "2026-04-22",
+    "mainBoardHighest": 4,
+    "mainBoardHighestNames": [
+      "金 螳 螂",
+      "金富科技"
+    ],
+    "mainBoardHighestSymbols": [
+      "002081",
+      "003018"
+    ],
+    "mainBoardSecondHighest": 2,
+    "mainBoardSecondHighestNames": [
+      "九鼎新材",
+      "华电辽能",
+      "苏州高新",
+      "海星股份",
+      "立达信"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "002201",
+      "600396",
+      "600736",
+      "603115",
+      "605365"
+    ],
+    "chinextHighest": 2,
+    "chinextHighestNames": [
+      "安诺其"
+    ],
+    "chinextHighestSymbols": [
+      "300067"
+    ]
+  },
+  {
+    "date": "04-23",
+    "fullDate": "2026-04-23",
+    "mainBoardHighest": 5,
+    "mainBoardHighestNames": [
+      "金 螳 螂"
+    ],
+    "mainBoardHighestSymbols": [
+      "002081"
+    ],
+    "mainBoardSecondHighest": 3,
+    "mainBoardSecondHighestNames": [
+      "华电辽能",
+      "苏州高新"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "600396",
+      "600736"
+    ],
+    "chinextHighest": 3,
+    "chinextHighestNames": [
+      "安诺其"
+    ],
+    "chinextHighestSymbols": [
+      "300067"
+    ]
+  },
+  {
+    "date": "04-24",
+    "fullDate": "2026-04-24",
+    "mainBoardHighest": 3,
+    "mainBoardHighestNames": [
+      "泰慕士",
+      "水发燃气"
+    ],
+    "mainBoardHighestSymbols": [
+      "001234",
+      "603318"
+    ],
+    "mainBoardSecondHighest": 2,
+    "mainBoardSecondHighestNames": [
+      "众合科技",
+      "华源控股",
+      "华电能源",
+      "综艺股份",
+      "国检集团",
+      "通达电气"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "000925",
+      "002787",
+      "600726",
+      "600770",
+      "603060",
+      "603390"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "温州宏丰",
+      "博世科",
+      "富瀚微",
+      "星华新材"
+    ],
+    "chinextHighestSymbols": [
+      "300283",
+      "300422",
+      "300613",
+      "301077"
+    ]
+  },
+  {
+    "date": "04-27",
+    "fullDate": "2026-04-27",
+    "mainBoardHighest": 4,
+    "mainBoardHighestNames": [
+      "水发燃气"
+    ],
+    "mainBoardHighestSymbols": [
+      "603318"
+    ],
+    "mainBoardSecondHighest": 3,
+    "mainBoardSecondHighestNames": [
+      "众合科技",
+      "华电能源"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "000925",
+      "600726"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "英飞特",
+      "杰创智能",
+      "飞南资源"
+    ],
+    "chinextHighestSymbols": [
+      "300582",
+      "301248",
+      "301500"
+    ]
+  },
+  {
+    "date": "04-28",
+    "fullDate": "2026-04-28",
+    "mainBoardHighest": 5,
+    "mainBoardHighestNames": [
+      "水发燃气"
+    ],
+    "mainBoardHighestSymbols": [
+      "603318"
+    ],
+    "mainBoardSecondHighest": 4,
+    "mainBoardSecondHighestNames": [
+      "华电能源"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "600726"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "永清环保",
+      "蜀道装备",
+      "宝丽迪",
+      "恒工精密"
+    ],
+    "chinextHighestSymbols": [
+      "300187",
+      "300540",
+      "300905",
+      "301261"
+    ]
+  },
+  {
+    "date": "04-29",
+    "fullDate": "2026-04-29",
+    "mainBoardHighest": 3,
+    "mainBoardHighestNames": [
+      "飞马国际",
+      "越剑智能"
+    ],
+    "mainBoardHighestSymbols": [
+      "002210",
+      "603095"
+    ],
+    "mainBoardSecondHighest": 2,
+    "mainBoardSecondHighestNames": [
+      "宏英智能",
+      "金 螳 螂",
+      "扬子新材",
+      "华升股份",
+      "宝光股份",
+      "天味食品",
+      "永杉锂业",
+      "利通电子",
+      "三人行"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "001266",
+      "002081",
+      "002652",
+      "600156",
+      "600379",
+      "603317",
+      "603399",
+      "603629",
+      "605168"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "鹏辉能源",
+      "光莆股份",
+      "德方纳米",
+      "苏文电能",
+      "铜冠铜箔"
+    ],
+    "chinextHighestSymbols": [
+      "300438",
+      "300632",
+      "300769",
+      "300982",
+      "301217"
+    ]
+  },
+  {
+    "date": "04-30",
+    "fullDate": "2026-04-30",
+    "mainBoardHighest": 4,
+    "mainBoardHighestNames": [
+      "越剑智能"
+    ],
+    "mainBoardHighestSymbols": [
+      "603095"
+    ],
+    "mainBoardSecondHighest": 3,
+    "mainBoardSecondHighestNames": [
+      "金 螳 螂",
+      "宝光股份",
+      "永杉锂业"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "002081",
+      "600379",
+      "603399"
+    ],
+    "chinextHighest": 2,
+    "chinextHighestNames": [
+      "光莆股份"
+    ],
+    "chinextHighestSymbols": [
+      "300632"
+    ]
+  },
+  {
+    "date": "05-06",
+    "fullDate": "2026-05-06",
+    "mainBoardHighest": 4,
+    "mainBoardHighestNames": [
+      "金 螳 螂",
+      "宝光股份",
+      "永杉锂业"
+    ],
+    "mainBoardHighestSymbols": [
+      "002081",
+      "600379",
+      "603399"
+    ],
+    "mainBoardSecondHighest": 3,
+    "mainBoardSecondHighestNames": [
+      "金 融 街",
+      "丰元股份",
+      "丽岛新材"
+    ],
+    "mainBoardSecondHighestSymbols": [
+      "000402",
+      "002805",
+      "603937"
+    ],
+    "chinextHighest": 1,
+    "chinextHighestNames": [
+      "朗科科技",
+      "东方国信",
+      "汇金股份",
+      "雷迪克",
+      "江波龙",
+      "德福科技"
+    ],
+    "chinextHighestSymbols": [
+      "300042",
+      "300166",
+      "300368",
+      "300652",
+      "301308",
+      "301511"
     ]
   }
 ]

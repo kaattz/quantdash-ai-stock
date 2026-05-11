@@ -1,57 +1,57 @@
 {
   "boardType": "concept",
-  "currentLeaderName": "快递",
-  "currentLeaderCode": "BK1489",
-  "currentLeaderPctChange": 6.01,
-  "currentStreakDays": 1,
+  "currentLeaderName": "883422.TI",
+  "currentLeaderCode": "883422.TI",
+  "currentLeaderPctChange": 15.83,
+  "currentStreakDays": 2,
   "currentTopThreeAppearances": 2,
-  "strongestRepeatName": "品牌消费电子",
+  "strongestRepeatName": "883905.TI",
   "strongestRepeatCount": 3,
   "entries": [
     {
-      "date": "04-09",
-      "leaderName": "彩电",
-      "leaderCode": "BK1453",
-      "leaderPctChange": 0.04,
-      "streakDays": 1,
-      "topThreeAppearances": 1,
-      "strengthDelta": null
-    },
-    {
-      "date": "04-10",
-      "leaderName": "品牌消费电子",
-      "leaderCode": "BK1337",
-      "leaderPctChange": 3.71,
-      "streakDays": 1,
-      "topThreeAppearances": 3,
-      "strengthDelta": null
-    },
-    {
-      "date": "04-13",
-      "leaderName": "其他生物制品",
-      "leaderCode": "BK1596",
-      "leaderPctChange": 0.68,
+      "date": "04-27",
+      "leaderName": "883401.TI",
+      "leaderCode": "883401.TI",
+      "leaderPctChange": 5.02,
       "streakDays": 1,
       "topThreeAppearances": 2,
       "strengthDelta": null
     },
     {
-      "date": "04-14",
-      "leaderName": "国际工程",
-      "leaderCode": "BK1475",
-      "leaderPctChange": 5.67,
+      "date": "04-28",
+      "leaderName": "883996.TI",
+      "leaderCode": "883996.TI",
+      "leaderPctChange": 10.02,
+      "streakDays": 1,
+      "topThreeAppearances": 2,
+      "strengthDelta": null
+    },
+    {
+      "date": "04-29",
+      "leaderName": "883936.TI",
+      "leaderCode": "883936.TI",
+      "leaderPctChange": 7.08,
       "streakDays": 1,
       "topThreeAppearances": 1,
       "strengthDelta": null
     },
     {
-      "date": "04-15",
-      "leaderName": "快递",
-      "leaderCode": "BK1489",
-      "leaderPctChange": 6.01,
+      "date": "04-30",
+      "leaderName": "883422.TI",
+      "leaderCode": "883422.TI",
+      "leaderPctChange": 29.99,
       "streakDays": 1,
       "topThreeAppearances": 2,
       "strengthDelta": null
+    },
+    {
+      "date": "05-06",
+      "leaderName": "883422.TI",
+      "leaderCode": "883422.TI",
+      "leaderPctChange": 15.83,
+      "streakDays": 2,
+      "topThreeAppearances": 2,
+      "strengthDelta": -14.17
     }
   ]
 }
