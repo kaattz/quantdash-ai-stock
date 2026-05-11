@@ -25,16 +25,26 @@ if (-not (Test-Path (Join-Path $PSScriptRoot "node_modules"))) {
   }
 }
 
+function New-ProjectCmd {
+  param([Parameter(Mandatory = $true)][string]$Command)
+
+  $activateBat = Join-Path $PSScriptRoot "venv\Scripts\activate.bat"
+  return "if exist `"$activateBat`" (call `"$activateBat`" || exit /b 1) else (echo [INFO] venv not found, using system environment) && $Command"
+}
+
 Write-Host "[INFO] Clearing existing frontend/backend ports..."
 & (Join-Path $PSScriptRoot "stop_project.bat")
 
 Write-Host "[INFO] Starting backend on http://127.0.0.1:7878 ..."
-Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", "if exist venv\Scripts\activate.bat call venv\Scripts\activate.bat && python scripts\server\app.py"
+$backendCommand = New-ProjectCmd "set `"PYTHONPATH=$PSScriptRoot\scripts`" && python -m server.app"
+Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", $backendCommand
 
 Write-Host "[INFO] Starting frontend dev server..."
-Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", "if exist venv\Scripts\activate.bat call venv\Scripts\activate.bat && npm run dev"
+$frontendCommand = New-ProjectCmd "npm run dev"
+Start-Process -FilePath "cmd.exe" -WorkingDirectory $PSScriptRoot -ArgumentList "/k", $frontendCommand
 
-$newsScriptDir = Join-Path $PSScriptRoot "dingding盘中资讯2\dingding盘中资讯"
+$newsName = "dingding" + [string]::Concat([char[]](0x76D8, 0x4E2D, 0x8D44, 0x8BAF))
+$newsScriptDir = Join-Path $PSScriptRoot "$newsName`2\$newsName"
 $startExternalNewsValue = ""
 if ($null -ne $env:START_EXTERNAL_NEWS) {
   $startExternalNewsValue = "$env:START_EXTERNAL_NEWS".Trim()
@@ -69,10 +79,10 @@ $newsRunner = if ($startExternalNews) { Join-Path $newsScriptDir "run_both.py" }
 if (Test-Path $newsRunner) {
   if ($startExternalNews) {
     Write-Host "[INFO] Starting news collectors (CLS + External)..."
-    Start-Process -FilePath "cmd.exe" -WorkingDirectory $newsScriptDir -ArgumentList "/k", "if exist `"$PSScriptRoot\venv\Scripts\activate.bat`" call `"$PSScriptRoot\venv\Scripts\activate.bat`" && python run_both.py"
+    Start-Process -FilePath "cmd.exe" -WorkingDirectory $newsScriptDir -ArgumentList "/k", (New-ProjectCmd "python run_both.py")
   } else {
     Write-Host "[INFO] Starting CLS news collector only..."
-    Start-Process -FilePath "cmd.exe" -WorkingDirectory $newsScriptDir -ArgumentList "/k", "if exist `"$PSScriptRoot\venv\Scripts\activate.bat`" call `"$PSScriptRoot\venv\Scripts\activate.bat`" && python cls_telegraph_to_dingtalk_single.py"
+    Start-Process -FilePath "cmd.exe" -WorkingDirectory $newsScriptDir -ArgumentList "/k", (New-ProjectCmd "python cls_telegraph_to_dingtalk_single.py")
   }
 } else {
   Write-Host "[WARN] News collector script not found: $newsRunner"
